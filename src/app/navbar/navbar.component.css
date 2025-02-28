@@ -22,4 +22,47 @@
       height: 50px;
     }
   }
+
+  .navbar-nav {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+
+    .nav-item {
+      &.active {
+        .nav-item-link {
+          background: #7e7e7e;
+          color: #fff;
+
+          .icon-link {
+            color: #fff !important;
+          }
+        }
+
+        .nav-item-link:hover {
+          background: #7e7e7e;
+        }
+      }
+
+      .nav-item-link {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        padding: 0.245rem 0.95rem;
+        border-radius: 5px;
+        background: #ececec;
+        color: #333;
+        text-decoration: none;
+
+        &:hover {
+          background: #e7e6e6;
+        }
+      }
+    }
+  }
 }

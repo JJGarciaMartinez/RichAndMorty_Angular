@@ -1,1 +1,4 @@
-<i class="ph-{{iconWeight}} ph-{{iconName}} icon-{{iconSize}}" aria-hidden="true"></i>
+<i class="ph-{{iconName}} icon-{{iconSize}} icon--color icon-class"
+    [ngClass]="iconWeight !== 'regular' ? 'ph-' + iconWeight + ' ph-' + iconName : 'ph ph-' + iconName"
+    aria-hidden="true" role="img">
+</i>

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 type IconWeight = 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
@@ -18,7 +19,7 @@ type IconSize =
 @Component({
   standalone: true,
   selector: 'app-icon',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './icon.component.html',
   styleUrl: './icon.component.css',
 })

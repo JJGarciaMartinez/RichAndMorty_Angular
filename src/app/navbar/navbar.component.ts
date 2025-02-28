@@ -1,19 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { IconComponent } from '@icons/icon.component';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
-  standalone: true,
+  imports: [CommonModule, RouterLink, IconComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
-  imports: [CommonModule, RouterLink],
 })
 export class NavbarComponent {
   navBarItems = [
-    { name: 'Home', url: '/' },
-    { name: 'Characters', url: '/characters' },
+    { name: 'Home', url: '/', icon: 'house' },
+    { name: 'Characters', url: '/characters', icon: 'user-list' },
   ];
   currentRoute = '/';
 
