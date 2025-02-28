@@ -1,0 +1,23 @@
+@import "@coreui/coreui";
+
+::root {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  line-height: 1.5;
+}
+
+p {
+  margin: 0;
+}
+
+body {
+  background-color: #f1f1f1;
+}

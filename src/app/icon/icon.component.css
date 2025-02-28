@@ -1,0 +1,54 @@
+@import "@phosphor-icons/web/thin";
+@import "@phosphor-icons/web/light";
+@import "@phosphor-icons/web/bold";
+@import "@phosphor-icons/web/fill";
+@import "@phosphor-icons/web/duotone";
+@import "@phosphor-icons/web/regular";
+
+.icon-xs {
+  font-size: 0.75rem;
+}
+
+.icon-sm {
+  font-size: 0.875rem;
+}
+
+.icon-md {
+  font-size: 1rem;
+}
+
+.icon-lg {
+  font-size: 1.125rem;
+}
+
+.icon-xl {
+  font-size: 1.25rem;
+}
+
+.icon-2xl {
+  font-size: 1.5rem;
+}
+
+.icon-3xl {
+  font-size: 1.875rem;
+}
+
+.icon-4xl {
+  font-size: 2.25rem;
+}
+
+.icon-5xl {
+  font-size: 3rem;
+}
+
+.icon-6xl {
+  font-size: 4rem;
+}
+
+.icon-7xl {
+  font-size: 5rem;
+}
+
+.icon-8xl {
+  font-size: 6rem;
+}
