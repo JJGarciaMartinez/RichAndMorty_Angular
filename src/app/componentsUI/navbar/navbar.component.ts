@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { IconComponent } from '@icons/icon.component';
+import { IconComponent } from '@componentsUI/icon/icon.component';
 import { Subscription } from 'rxjs';
+import navbarRoutes from 'utils/navbarRoutes';
 
 @Component({
   selector: 'app-navbar',
@@ -10,11 +11,8 @@ import { Subscription } from 'rxjs';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {
-  navBarItems = [
-    { name: 'Home', url: '/', icon: 'house' },
-    { name: 'Characters', url: '/characters', icon: 'user-list' },
-  ];
+export class NavbarComponent implements OnInit, OnDestroy {
+  navbarRoutes = navbarRoutes;
   currentRoute = '/';
 
   private routerSubscription!: Subscription;

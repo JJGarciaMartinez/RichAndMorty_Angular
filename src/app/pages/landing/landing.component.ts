@@ -44,7 +44,7 @@ export class LandingComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.rickAndMortyService.getCharacters().subscribe(async (data) => {
+    this.rickAndMortyService.getRandomPage().subscribe(async (data) => {
       await this.setSlides(data);
     });
   }

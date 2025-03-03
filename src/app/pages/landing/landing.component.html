@@ -1,0 +1,45 @@
+<div class="main-landing-container">
+    <!-- Header -->
+    <div class="hero-container">
+        <h1 class="hero-title">Welcome to the <span class="hero-title-highlight">Rick And Morty API</span></h1>
+        <p class="hero-subtitle">
+            This application was created using the Rick and Morty API with Angular. You can see all the characters
+            from the series, their status, species, origin and location.
+        </p>
+        <a class="btn btn-primary" routerLink="/characters">Get Started</a>
+
+    </div>
+
+    <!-- Carousel -->
+    <div class="carousel-main-container">
+        <c-carousel [activeIndex]="0" (itemChange)="onItemChange($event)" [interval]="1000" transition="slide"
+            [pause]="false">
+            <c-carousel-inner class="carousel-container">
+                <c-carousel-item *ngFor="let slide of slides; let i = index" [ngClass]="{'active': i === currentSlide }"
+                    class="carousel-item">
+                    <div class="item-content">
+                        <span class="d-block w-100 item-image">
+                            <img [src]="slide.src" alt="{{slide.title}}" class="image-crousel" loading="lazy" />
+                        </span>
+
+                        <span class="d-block w-100 item-data">
+                            <h3>{{slide.title}}</h3>
+                            <p>{{slide.description}}</p>
+                        </span>
+                    </div>
+                </c-carousel-item>
+            </c-carousel-inner>
+        </c-carousel>
+    </div>
+
+
+    <section class="characters-section">
+        Characters
+    </section>
+    <section class="episodes-section">
+        Episodes
+    </section>
+    <section class="locations-section">
+        Locations
+    </section>
+</div>

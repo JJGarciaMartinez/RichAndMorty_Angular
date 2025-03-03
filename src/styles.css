@@ -7,9 +7,17 @@
 
 @import "@coreui/coreui";
 
-::root {
+:root {
   margin: 0;
   padding: 0;
+  ---neutro: #f9f9f9;
+  ---base: #333;
+  ---acent: #6b8e23;
+  ---calid: #a0522d;
+  ---contrastDetail: #4682b4;
+  ---alive: #0c971f;
+  ---dead: #971c0c;
+  ---unknown: #6b6b6b;
 }
 
 * {
@@ -26,5 +34,23 @@ p {
 }
 
 body {
-  background-color: #f1f1f1;
+  min-width: 100%;
+  min-height: 100vh;
+  background-color: #e4e4e4;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: rgb(201, 201, 201);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(56, 56, 56, 0.5);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(53, 53, 53, 0.4);
 }

@@ -1,0 +1,98 @@
+.main-landing-container {
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.hero-container {
+  width: 100%;
+  height: 100%;
+  grid-column: span 3 / span 3;
+  grid-row: span 3 / span 3;
+  padding: 40px;
+  border-radius: 10px;
+  background-color: aliceblue;
+}
+
+.carousel-main-container {
+  width: 100%;
+  height: 100%;
+
+  grid-column: span 3 / span 3;
+  grid-row: span 3 / span 3;
+  grid-column-start: 4;
+
+  display: grid;
+
+  .carousel-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: aliceblue;
+
+    .carousel-item {
+      width: 100%;
+      height: 100%;
+
+      .item-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 40px;
+
+        .item-image {
+          width: 100%;
+          height: 100%;
+
+          & img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+          }
+        }
+
+        .item-data {
+        }
+      }
+    }
+  }
+}
+
+.characters-section {
+  padding: 40px;
+  border-radius: 10px;
+  background-color: aliceblue;
+
+  grid-column: span 2 / span 2;
+  grid-row: span 2 / span 2;
+  grid-row-start: 4;
+}
+
+.episodes-section {
+  padding: 40px;
+  border-radius: 10px;
+  background-color: aliceblue;
+
+  grid-column: span 2 / span 2;
+  grid-row: span 2 / span 2;
+  grid-column-start: 3;
+  grid-row-start: 4;
+}
+
+.locations-section {
+  padding: 40px;
+  border-radius: 10px;
+  background-color: aliceblue;
+
+  grid-column: span 2 / span 2;
+  grid-row: span 2 / span 2;
+  grid-column-start: 5;
+  grid-row-start: 4;
+}
