@@ -3,7 +3,7 @@
     <ul class="characters-list">
         <li *ngFor="let character of characters" class="character-item">
             <img [src]="character.image" alt="{{ character.name }}">
-            <a [routerLink]="['/detail', character.id]" routerLinkActive="active" ariaCurrentWhenActive="page">{{
+            <a [routerLink]="['detail', character.id]" routerLinkActive="active" ariaCurrentWhenActive="page">{{
                 character.name }}</a>
 
             <p>{{ character.status }} - {{ character.species }}</p>

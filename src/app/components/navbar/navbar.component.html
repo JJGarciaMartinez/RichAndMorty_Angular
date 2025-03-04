@@ -1,0 +1,20 @@
+<nav class="navbar-container">
+    <span class="navbar-brand-container">
+        <img src="/logo.webp" alt="Logo" />
+
+    </span>
+
+    <ul class="navbar-nav">
+        <ng-container *ngFor="let item of navbarRoutes">
+            <li class="nav-item" [ngClass]="{'active': item.url === currentRoute }">
+                <a [routerLink]="item.url" class="nav-item-link">
+                    <app-icon [iconName]="item.icon" iconSize="2xl" iconWeight="light"
+                        [color]="item.url === currentRoute ? '#fff' : '#fff'" />
+                    <p class="nav-item-text">
+                        {{ item.name }}
+                    </p>
+                </a>
+            </li>
+        </ng-container>
+    </ul>
+</nav>

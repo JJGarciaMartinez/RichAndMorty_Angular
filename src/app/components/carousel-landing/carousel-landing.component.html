@@ -1,0 +1,27 @@
+<c-carousel [activeIndex]="0" (itemChange)="onItemChange($event)" [interval]="1000" transition="slide">
+    <c-carousel-inner class="carousel-container">
+        <c-carousel-item *ngFor="let slide of slides">
+            <div class="item-container">
+                <span class="item-content">
+                    <div *ngIf="slide.loading" class="loader">
+                        <c-spinner color="secondary" />
+                    </div> <!-- Loader -->
+                    <img [src]="slide.src" alt="{{slide.title}}" class="image-carousel" loading="eager"
+                        (load)="onImageLoad(slide)" />
+                    <span class="item-text-container">
+                        <span class="item-text">
+                            <h3 class="item-title" [title]="slide.title">{{slide.title}}</h3>
+                            <span class="carousel-description">
+                                <app-icon iconName="circle" iconWeight="fill"
+                                    [className]="'status-' + slide.status.toLowerCase()" />
+                                {{slide.status}} - {{slide.species}}
+                            </span>
+                        </span>
+                        <a [routerLink]="['/characters/detail/', slide.id_character]" class="details-btn-primary">More
+                            Details</a>
+                    </span>
+                </span>
+            </div>
+        </c-carousel-item>
+    </c-carousel-inner>
+</c-carousel>

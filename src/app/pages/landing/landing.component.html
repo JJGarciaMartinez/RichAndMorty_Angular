@@ -1,0 +1,37 @@
+<div class="main-landing-container">
+    <!-- Hero -->
+    <app-hero class="hero-container" />
+
+    <!-- Socials -->
+    <div class="socials-container">
+        Some social networks
+
+        <p class="additional-info">
+            For more information about the API, check out the <a href="https://rickandmortyapi.com/"
+                target="_blank">official documentation</a>.
+        </p>
+    </div>
+
+    <!-- Carousel -->
+    <div class="carousel-main-container">
+        <ng-container *ngIf="slides.length === 0">
+            <app-loader-spinner text="Loading" />
+        </ng-container>
+
+        <ng-container *ngIf="slides.length > 0">
+            <app-carousel-landing [slides]="slides"></app-carousel-landing>
+        </ng-container>
+    </div>
+
+
+    <!-- Sections -->
+    <section class="characters-section">
+        <h2>Characters</h2>
+    </section>
+    <section class="episodes-section">
+        <h2>Episodes</h2>
+    </section>
+    <section class="locations-section">
+        <h2>Locations</h2>
+    </section>
+</div>

@@ -1,7 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { PhosphorIcon } from '@phosphor-icons/core';
 
-type IconWeight = 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
-type IconSize =
+export type IconWeight =
+  | 'thin'
+  | 'light'
+  | 'regular'
+  | 'bold'
+  | 'fill'
+  | 'duotone';
+export type IconSize =
   | 'xs'
   | 'sm'
   | 'md'
@@ -18,14 +27,16 @@ type IconSize =
 @Component({
   standalone: true,
   selector: 'app-icon',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './icon.component.html',
   styleUrl: './icon.component.css',
 })
 export class IconComponent {
   @Input() iconWeight: IconWeight = 'regular';
-  @Input() iconName: string = 'home';
+  @Input() iconName: string = 'house';
   @Input() iconSize: IconSize = 'md';
+  @Input() className: string = '';
+  @Input() color: string = '';
 
   constructor() {}
 }

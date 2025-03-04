@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RickAndMortyService } from '@services/rick-n-morty.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { PaginationComponent } from '@pagination/pagination.component';
+import { PaginationComponent } from '@components/pagination/pagination.component';
 
 @Component({
   selector: 'app-character-list',

@@ -1,8 +1,20 @@
 @import "@coreui/coreui";
 
-::root {
+:root {
   margin: 0;
   padding: 0;
+  --neutro: rgb(249, 249, 249);
+  --base: #333;
+  --alternative: #464545;
+  --acent: #6b8e23;
+  --calid: #a0522d;
+  --contrastDetail: rgb(70, 130, 180);
+  --contrastDetailHover: rgba(60, 120, 170);
+  --contrastDetailActive: rgb(45, 102, 150); /* fix typo in variable name */
+
+  --alive: #0c971f;
+  --dead: #971c0c;
+  --unknown: #6b6b6b;
 }
 
 * {
@@ -14,10 +26,97 @@
   line-height: 1.5;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 p {
   margin: 0;
 }
 
 body {
-  background-color: #f1f1f1;
+  min-width: 100%;
+  min-height: 100vh;
+  background-color: #e4e4e4;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: rgb(201, 201, 201);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(56, 56, 56, 0.5);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(53, 53, 53, 0.4);
+}
+
+.details-btn-primary {
+  background-color: var(--contrastDetail);
+  color: var(--neutro);
+  border: none;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  text-decoration: none;
+
+  &:hover {
+    background-color: var(--contrastDetailHover);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:active {
+    transform: scale(0.98);
+    background-color: var(--contrastDetailActive);
+  }
+}
+
+.loader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  flex-direction: column;
+  gap: 10px;
+  inset: 0;
+  border-radius: 10px;
+
+  background-color: rgba(249, 249, 249, 0.4);
+  -webkit-backdrop-filter: blur(55px);
+  backdrop-filter: blur(55px);
+  border: 1px solid #fff;
+
+  z-index: 10;
+
+  .loader-text {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--alternative);
+    opacity: 0.8;
+  }
+}
+
+.status-alive {
+  color: var(--alive) !important;
+}
+
+.status-dead {
+  color: var(--dead) !important;
+}
+
+.status-unknown {
+  color: var(--unknown) !important;
 }

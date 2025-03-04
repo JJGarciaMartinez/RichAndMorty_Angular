@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IconComponent } from '@icons/icon.component';
+import { IconComponent } from '@components/icon/icon.component';
 
 @Component({
   selector: 'app-pagination',

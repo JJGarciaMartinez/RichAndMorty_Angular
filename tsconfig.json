@@ -19,12 +19,12 @@
     "target": "ES2022",
     "module": "ES2022",
     "paths": {
-      "@characterDetail/*": ["./app/character-detail/*"],
-      "@characterList/*": ["./app/character-list/*"],
-      "@icons/*": ["./app/icon/*"],
-      "@pagination/*": ["./app/pagination/*"],
       "@services/*": ["./app/services/*"],
-      "@landing/*": ["./app/landing/*"]
+      "@landing/*": ["./app/landing/*"],
+      "@components/*": ["./app/components/*"],
+      "@pages/*": ["./app/pages/*"],
+      "@utils/*": ["./utils/*"],
+      "@assets/*": ["./app/assets/*"]
     }
   },
   "angularCompilerOptions": {

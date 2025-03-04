@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RickAndMortyService } from '../services/rick-n-morty.service';
+import { RickAndMortyService } from '@services/rick-n-morty.service';
 
 @Component({
   selector: 'app-character-detail',

@@ -1,10 +1,3 @@
-@import "@phosphor-icons/web/thin";
-@import "@phosphor-icons/web/light";
-@import "@phosphor-icons/web/bold";
-@import "@phosphor-icons/web/fill";
-@import "@phosphor-icons/web/duotone";
-@import "@phosphor-icons/web/regular";
-
 .icon-xs {
   font-size: 0.75rem;
 }
@@ -51,4 +44,10 @@
 
 .icon-8xl {
   font-size: 6rem;
+}
+
+.icon-class {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

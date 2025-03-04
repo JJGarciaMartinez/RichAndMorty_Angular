@@ -1,55 +1,50 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgFor } from '@angular/common';
-import {
-  CarouselCaptionComponent,
-  CarouselComponent,
-  CarouselInnerComponent,
-  CarouselItemComponent,
-  ThemeDirective,
-} from '@coreui/angular';
+import { CommonModule } from '@angular/common';
 
 import { RickAndMortyService } from '@services/rick-n-morty.service';
-import { RouterLink } from '@angular/router';
+import { CarouselLandingComponent } from '@components/carousel-landing/carousel-landing.component';
+import { LoaderSpinnerComponent } from '@components/loader-spinner/loader-spinner.component';
+import { HeroComponent } from '@components/hero/hero.component';
 
 @Component({
   selector: 'app-landing',
   imports: [
-    ThemeDirective,
-    CarouselComponent,
-    CarouselInnerComponent,
-    NgFor,
-    CarouselItemComponent,
-    CarouselCaptionComponent,
     CommonModule,
-    RouterLink,
+    CarouselLandingComponent,
+    LoaderSpinnerComponent,
+    HeroComponent,
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css',
 })
 export class LandingComponent implements OnInit {
   slides: any[] = [];
-  currentSlide: number = 0;
+  isLoading = false;
 
   constructor(private rickAndMortyService: RickAndMortyService) {}
 
   async setSlides(data: any): Promise<void> {
     this.slides = data.results.map((character: any, index: number) => ({
       id: index,
+      id_character: character.id,
       src: character.image,
       title: character.name,
-      subtitle: character.status,
+      status: character.status,
+      species: character.species,
+      loading: true,
     }));
 
     // console.log('Carousel slides', this.slides);
   }
 
   async ngOnInit(): Promise<void> {
-    this.rickAndMortyService.getCharacters().subscribe(async (data) => {
+    this.isLoading = true;
+    this.rickAndMortyService.getRandomPage().subscribe(async (data) => {
+      if (!data.ok) {
+        this.isLoading = false;
+      }
       await this.setSlides(data);
+      this.isLoading = false;
     });
-  }
-
-  async onItemChange($event: any): Promise<void> {
-    this.currentSlide = $event;
   }
 }
