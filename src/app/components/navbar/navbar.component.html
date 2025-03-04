@@ -1,6 +1,6 @@
 <nav class="navbar-container">
     <span class="navbar-brand-container">
-        <img src="https://rick-and-morty-challenge-virid.vercel.app/assets/icon-512x512-CrHeM_n2.webp" alt="Logo" />
+        <img src="/logo.webp" alt="Logo" />
 
     </span>
 
@@ -8,8 +8,11 @@
         <ng-container *ngFor="let item of navbarRoutes">
             <li class="nav-item" [ngClass]="{'active': item.url === currentRoute }">
                 <a [routerLink]="item.url" class="nav-item-link">
-                    <app-icon [iconName]="item.icon" [iconSize]="'lg'" [iconWeight]="'regular'" class="icon-link" />
-                    {{ item.name }}
+                    <app-icon [iconName]="item.icon" iconSize="2xl" iconWeight="light"
+                        [color]="item.url === currentRoute ? '#fff' : '#fff'" />
+                    <p class="nav-item-text">
+                        {{ item.name }}
+                    </p>
                 </a>
             </li>
         </ng-container>

@@ -23,7 +23,8 @@
       "@landing/*": ["./app/landing/*"],
       "@components/*": ["./app/components/*"],
       "@pages/*": ["./app/pages/*"],
-      "@utils/*": ["./utils/*"]
+      "@utils/*": ["./utils/*"],
+      "@assets/*": ["./app/assets/*"]
     }
   },
   "angularCompilerOptions": {

@@ -1,8 +1,10 @@
 .main-container {
   height: 100dvh;
+  width: 100vw;
+  overflow-x: hidden;
 
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(5, 1fr);
   gap: 12px;
 
@@ -14,12 +16,13 @@
   max-height: 100%;
   overflow-y: auto;
 
-  grid-column: span 7 / span 7;
+  grid-column: span 8 / span 8;
   grid-row: span 5 / span 5;
 }
 
 .navbar-main {
   grid-row: span 5 / span 5;
+  grid-column: span 1 / span 1;
 }
 
 /* Media query para dispositivos móviles */

@@ -6,13 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RickAndMortyService {
-  private apiUrl = 'https://rickandmortyapi.com/api/character';
+  private charactersURL = 'https://rickandmortyapi.com/api/character';
+  private locationsURL = 'https://rickandmortyapi.com/api/location';
+  private episodesURL = 'https://rickandmortyapi.com/api/episode';
 
   constructor(private http: HttpClient) {}
 
   // Character services
   getCharacters(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    return this.http.get<any>(this.charactersURL);
   }
 
   getNextPage(url: string): Observable<any> {
@@ -24,48 +26,44 @@ export class RickAndMortyService {
   }
 
   getCharacter(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+    return this.http.get<any>(`${this.charactersURL}/${id}`);
   }
 
   getCharactersByPage(page: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}?page=${page}`);
+    return this.http.get<any>(`${this.charactersURL}?page=${page}`);
   }
 
   getRandomPage(): Observable<any> {
     return this.http.get<any>(
-      `${this.apiUrl}?page=${Math.floor(Math.random() * 42)}`
+      `${this.charactersURL}?page=${Math.floor(Math.random() * 42)}`
     );
   }
 
   // Location services
 
   getAllLocations(): Observable<any> {
-    return this.http.get<any>('https://rickandmortyapi.com/api/location');
+    return this.http.get<any>(this.locationsURL);
   }
 
   getLocation(id: number): Observable<any> {
-    return this.http.get<any>(`https://rickandmortyapi.com/api/location/${id}`);
+    return this.http.get<any>(`${this.locationsURL}/${id}`);
   }
 
   getLocationsByPage(page: number): Observable<any> {
-    return this.http.get<any>(
-      `https://rickandmortyapi.com/api/location?page=${page}`
-    );
+    return this.http.get<any>(`${this.locationsURL}?page=${page}`);
   }
 
   // Episode services
 
   getAllEpisodes(): Observable<any> {
-    return this.http.get<any>('https://rickandmortyapi.com/api/episode');
+    return this.http.get<any>(this.episodesURL);
   }
 
   getEpisode(id: number): Observable<any> {
-    return this.http.get<any>(`https://rickandmortyapi.com/api/episode/${id}`);
+    return this.http.get<any>(`${this.episodesURL}/${id}`);
   }
 
   getEpisodesByPage(page: number): Observable<any> {
-    return this.http.get<any>(
-      `https://rickandmortyapi.com/api/episode?page=${page}`
-    );
+    return this.http.get<any>(`${this.episodesURL}?page=${page}`);
   }
 }

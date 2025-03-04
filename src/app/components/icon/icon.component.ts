@@ -27,6 +27,8 @@ export class IconComponent {
   @Input() iconWeight: IconWeight = 'regular';
   @Input() iconName: string = 'house';
   @Input() iconSize: IconSize = 'md';
+  @Input() className: string = '';
+  @Input() color: string = '';
 
   constructor() {}
 }
