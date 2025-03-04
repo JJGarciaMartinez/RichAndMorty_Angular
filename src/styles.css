@@ -10,14 +10,15 @@
 :root {
   margin: 0;
   padding: 0;
-  ---neutro: #f9f9f9;
-  ---base: #333;
-  ---acent: #6b8e23;
-  ---calid: #a0522d;
-  ---contrastDetail: #4682b4;
-  ---alive: #0c971f;
-  ---dead: #971c0c;
-  ---unknown: #6b6b6b;
+  --neutro: rgb(249, 249, 249);
+  --base: #333;
+  --alternative: #464545;
+  --acent: #6b8e23;
+  --calid: #a0522d;
+  --contrastDetail: rgb(70, 130, 180);
+  --alive: #0c971f;
+  --dead: #971c0c;
+  --unknown: #6b6b6b;
 }
 
 * {
@@ -53,4 +54,15 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(53, 53, 53, 0.4);
+}
+
+.details-btn-primary {
+  background-color: var(--contrastDetail);
+  color: var(--neutro);
+  border: none;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
 }

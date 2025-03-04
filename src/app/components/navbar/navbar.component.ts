@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { IconComponent } from '@componentsUI/icon/icon.component';
+import { IconComponent } from '@components/icon/icon.component';
 import { Subscription } from 'rxjs';
 import navbarRoutes from 'utils/navbarRoutes';
 
@@ -23,6 +23,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.currentRoute = event.url;
+
+        if (this.currentRoute == '') {
+          this.currentRoute = '/';
+        }
       }
     });
   }

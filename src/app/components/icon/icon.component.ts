@@ -25,7 +25,7 @@ type IconSize =
 })
 export class IconComponent {
   @Input() iconWeight: IconWeight = 'regular';
-  @Input() iconName: string = 'home';
+  @Input() iconName: string = 'house';
   @Input() iconSize: IconSize = 'md';
 
   constructor() {}

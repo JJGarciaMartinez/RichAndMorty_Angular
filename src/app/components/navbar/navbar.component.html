@@ -6,7 +6,7 @@
 
     <ul class="navbar-nav">
         <ng-container *ngFor="let item of navbarRoutes">
-            <li class="nav-item" [ngClass]="{'active': item.url === currentRoute}">
+            <li class="nav-item" [ngClass]="{'active': item.url === currentRoute }">
                 <a [routerLink]="item.url" class="nav-item-link">
                     <app-icon [iconName]="item.icon" [iconSize]="'lg'" [iconWeight]="'regular'" class="icon-link" />
                     {{ item.name }}

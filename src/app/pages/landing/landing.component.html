@@ -7,24 +7,35 @@
             from the series, their status, species, origin and location.
         </p>
         <a class="btn btn-primary" routerLink="/characters">Get Started</a>
+    </div>
 
+    <div class="socials-container">
+        Some social networks
     </div>
 
     <!-- Carousel -->
     <div class="carousel-main-container">
-        <c-carousel [activeIndex]="0" (itemChange)="onItemChange($event)" [interval]="1000" transition="slide"
-            [pause]="false">
+        <c-carousel [activeIndex]="0" (itemChange)="onItemChange($event)" [interval]="1000" transition="slide">
             <c-carousel-inner class="carousel-container">
-                <c-carousel-item *ngFor="let slide of slides; let i = index" [ngClass]="{'active': i === currentSlide }"
-                    class="carousel-item">
-                    <div class="item-content">
-                        <span class="d-block w-100 item-image">
-                            <img [src]="slide.src" alt="{{slide.title}}" class="image-crousel" loading="lazy" />
-                        </span>
-
-                        <span class="d-block w-100 item-data">
-                            <h3>{{slide.title}}</h3>
-                            <p>{{slide.description}}</p>
+                <c-carousel-item *ngFor="let slide of slides">
+                    <div class="item-container">
+                        <span class="item-content">
+                            <div *ngIf="slide.loading" class="loader">
+                                <c-spinner color="secondary" />
+                            </div> <!-- Loader -->
+                            <img [src]="slide.src" alt="{{slide.title}}" class="image-carousel" loading="lazy"
+                                (load)="onImageLoad(slide)" />
+                            <span class="item-text-container">
+                                <span class="item-text">
+                                    <h3 class="item-title" [title]="slide.title">{{slide.title}}</h3>
+                                    <span class="carousel-description">
+                                        <app-icon iconName="circle" iconWeight="fill" iconSize="lg" />
+                                        {{slide.subtitle}} - {{slide.type}}
+                                    </span>
+                                </span>
+                                <a [routerLink]="['/characters/detail/', slide.id_character]"
+                                    class="details-btn-primary">More Details</a>
+                            </span>
                         </span>
                     </div>
                 </c-carousel-item>

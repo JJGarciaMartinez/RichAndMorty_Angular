@@ -21,7 +21,7 @@
     "paths": {
       "@services/*": ["./app/services/*"],
       "@landing/*": ["./app/landing/*"],
-      "@componentsUI/*": ["./app/componentsUI/*"],
+      "@components/*": ["./app/components/*"],
       "@pages/*": ["./app/pages/*"],
       "@utils/*": ["./utils/*"]
     }
