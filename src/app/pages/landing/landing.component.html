@@ -21,12 +21,31 @@
 
     <!-- Sections -->
     <section class="characters-section">
-        <h2>Characters</h2>
+        <h2 class="characters-title">Characters</h2>
+        <p class="characters-description">R&M API has a lot of characters, here you can see some of them.</p>
+        <ng-container *ngIf="characters.length !== 0">
+            <app-small-cards [images]="getCharactersImages()" [isLoading]="isLoading" [imagesToShow]="7"
+                [totalImages]="infoCharacters.count" />
+        </ng-container>
+        <ng-container *ngIf="characters.length === 0">
+            <app-loader-spinner text="Loading" />
+        </ng-container>
+        <a class="details-btn-secondary" routerLink="/characters">See the {{infoCharacters.count}} characters</a>
     </section>
+
     <section class="episodes-section">
-        <h2>Episodes</h2>
+        <h2 class="episodes-title">Episodes</h2>
+        <p class="episodes-description">R&M API has a lot of episodes, here you can see some of them and their
+            characters that appear in them.</p>
+
+        <a class="details-btn-secondary" routerLink="/episodes">See the {{infoEpisodes.count}} episodes</a>
     </section>
+
+
     <section class="locations-section">
-        <h2>Locations</h2>
+        <h2 class="location-title">Locations</h2>
+        <p class="location-description">R&M API has a lot of locations, here you can see some of them and the characters
+            that appear in them.</p>
+        <a class="details-btn-secondary" routerLink="/locations">See the {{infoLocations.count}} locations</a>
     </section>
 </div>

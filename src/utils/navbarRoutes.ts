@@ -12,8 +12,8 @@
 const navbarRoutes = [
   { name: 'Home', url: '/', icon: 'house' },
   { name: 'Characters', url: '/characters', icon: 'user-list' },
-  { name: 'Locations', url: '/locations', icon: 'map-pin' },
   { name: 'Episodes', url: '/episodes', icon: 'cards' },
+  { name: 'Locations', url: '/locations', icon: 'map-pin' },
 ];
 
 export default navbarRoutes;

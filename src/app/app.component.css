@@ -1,6 +1,6 @@
 .main-container {
   height: 100dvh;
-  width: 100vw;
+  width: 100dvw;
   overflow-x: hidden;
 
   display: grid;

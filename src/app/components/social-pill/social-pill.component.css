@@ -20,7 +20,7 @@
   }
 
   &:focus {
-    outline: 2px solid var(--acent);
+    outline: 2px solid var(--base);
   }
 
   &:active {
