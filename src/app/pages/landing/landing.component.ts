@@ -6,6 +6,13 @@ import { CarouselLandingComponent } from '@components/carousel-landing/carousel-
 import { LoaderSpinnerComponent } from '@components/loader-spinner/loader-spinner.component';
 import { HeroComponent } from '@components/hero/hero.component';
 import { SocialsLandingComponent } from '@components/socials-landing/socials-landing.component';
+import {
+  InfoCharacters,
+  InfoEpisodes,
+  InfoLocations,
+} from '@typesApp/infoDataRickNMorty';
+import { RouterLink } from '@angular/router';
+import { SmallCardsComponent } from '@components/small-cards/small-cards.component';
 
 @Component({
   selector: 'app-landing',
@@ -15,6 +22,8 @@ import { SocialsLandingComponent } from '@components/socials-landing/socials-lan
     LoaderSpinnerComponent,
     HeroComponent,
     SocialsLandingComponent,
+    RouterLink,
+    SmallCardsComponent,
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css',
@@ -22,6 +31,15 @@ import { SocialsLandingComponent } from '@components/socials-landing/socials-lan
 export class LandingComponent implements OnInit {
   slides: any[] = [];
   isLoading = false;
+
+  infoCharacters: InfoCharacters = { count: 0, pages: 0, next: '', prev: '' };
+  characters: any[] = [];
+
+  infoEpisodes: InfoEpisodes = { count: 0, pages: 0, next: '', prev: '' };
+  episodes: any[] = [];
+
+  infoLocations: InfoLocations = { count: 0, pages: 0, next: '', prev: '' };
+  locations: any[] = [];
 
   constructor(private rickAndMortyService: RickAndMortyService) {}
 
@@ -48,5 +66,30 @@ export class LandingComponent implements OnInit {
       await this.setSlides(data);
       this.isLoading = false;
     });
+
+    this.rickAndMortyService
+      .getCharacters()
+      .subscribe(({ results: characters, info: infoCharacters }) => {
+        this.characters = characters;
+        this.infoCharacters = infoCharacters;
+      });
+
+    this.rickAndMortyService
+      .getAllEpisodes()
+      .subscribe(({ results: episodes, info: infoEpisodes }) => {
+        this.infoEpisodes = infoEpisodes;
+        this.episodes = episodes;
+      });
+
+    this.rickAndMortyService
+      .getAllLocations()
+      .subscribe(({ results: locations, info: infoLocations }) => {
+        this.infoLocations = infoLocations;
+        this.locations = locations;
+      });
+  }
+
+  getCharactersImages(): string[] {
+    return this.characters.map((character) => character.image);
   }
 }

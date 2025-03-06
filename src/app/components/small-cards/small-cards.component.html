@@ -1,0 +1,19 @@
+<div class="small-cards-main">
+    <ng-container *ngIf="isLoading">
+        <app-loader-spinner text="Loading" />
+    </ng-container>
+    <div class="small-cards-container">
+        <ng-container *ngIf="!isLoading && images.length > 0">
+            <div class="small-card" *ngFor="let image of displayedImages; let i = index"
+                [ngClass]="{'last-image': i === imagesToShow-1}" [ngStyle]="{'z-index':  i +1 }">
+                <img [routerLink]="'/characters/detail/'+ (i+1)" [src]="image" alt="Character Image" loading="eager" />
+                <span class="remaining-count" *ngIf="i === imagesToShow-1 && remainingImagesCount > 0">
+                    +{{ remainingImagesCount }}
+                </span>
+            </div>
+        </ng-container>
+    </div>
+    <ng-container *ngIf="!isLoading && images.length === 0">
+        <p>No images available.</p>
+    </ng-container>
+</div>

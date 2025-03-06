@@ -17,8 +17,4 @@ export class SocialPillComponent extends IconComponent {
   constructor() {
     super();
   }
-
-  openSocialLink(): void {
-    window.open(this.socialLink, this.isTargetBlank ? '_blank' : '_self');
-  }
 }

@@ -29,6 +29,12 @@ export class RickAndMortyService {
     return this.http.get<any>(`${this.charactersURL}/${id}`);
   }
 
+  getCharacterByNameOrStatus(name: string, status: string): Observable<any> {
+    return this.http.get<any>(
+      `${this.charactersURL}/?name=${name}&status=${status}`
+    );
+  }
+
   getCharactersByPage(page: number): Observable<any> {
     return this.http.get<any>(`${this.charactersURL}?page=${page}`);
   }

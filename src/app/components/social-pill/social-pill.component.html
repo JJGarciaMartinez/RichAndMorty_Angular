@@ -1,4 +1,4 @@
-<a href="{{ socialLink }}" (click)="openSocialLink()" [className]="classPill + ' social-pill'">
+<a href="{{ socialLink }}" [className]="classPill + ' social-pill'" [attr.target]="isTargetBlank ? '_blank' : '_self'">
     <app-icon [name]="socialIcon" [classIcon]="classIcon" [color]="color" [size]="size" [weight]="weight" />
     <p>
         {{ socialName }}
