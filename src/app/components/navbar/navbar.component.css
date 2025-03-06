@@ -38,14 +38,22 @@
     .nav-item {
       width: 100%;
 
-      .nav-item-text {
-        color: #fff !important;
-      }
-
       &.active {
         .nav-item-link {
-          background: var(--contrastDetailActive);
+          background: var(--contrastDetail);
           border-color: var(--contrastDetail);
+
+          &:hover {
+            background: var(--contrastDetailHover);
+          }
+
+          &:active {
+            background: var(--contrastDetailActive);
+          }
+
+          .nav-item-text {
+            color: #fff;
+          }
         }
       }
 
@@ -59,18 +67,22 @@
         cursor: pointer;
         transition: all 200ms;
         padding: 0.245rem 0.95rem;
-        border-radius: 5px;
-        background: var(--contrastDetail);
-        color: #333;
+        border-radius: 10px;
+        background: var(--neutro);
         text-decoration: none;
-        border: 1.5px solid transparent;
+        border: 1.5px solid rgba(var(--contrastDetailVariant), 0.5);
 
         &:hover {
-          background: var(--contrastDetailHover);
+          background: rgba(var(--contrastDetailVariant), 0.1);
         }
 
         &:active {
           scale: 0.98;
+          background: rgba(var(--contrastDetailVariant), 0.2);
+        }
+
+        .nav-item-text {
+          color: #333;
         }
       }
     }

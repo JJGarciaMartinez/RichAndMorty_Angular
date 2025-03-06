@@ -8,8 +8,7 @@
         <ng-container *ngFor="let item of navbarRoutes">
             <li class="nav-item" [ngClass]="{'active': item.url === currentRoute }">
                 <a [routerLink]="item.url" class="nav-item-link">
-                    <app-icon [iconName]="item.icon" iconSize="2xl" iconWeight="light"
-                        [color]="item.url === currentRoute ? '#fff' : '#fff'" />
+                    <app-icon [name]="item.icon" size="xl" [color]="item.url === currentRoute ? '#fff' : '#333'" />
                     <p class="nav-item-text">
                         {{ item.name }}
                     </p>

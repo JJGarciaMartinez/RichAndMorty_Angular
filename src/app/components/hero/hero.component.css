@@ -64,4 +64,21 @@
     text-align: start;
     line-height: 1.75;
   }
+
+  @media (max-width: 768px) {
+    .hero-title-container {
+      .title-hero {
+        font-size: 1.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 0.65rem;
+      }
+    }
+
+    .hero-description {
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+  }
 }

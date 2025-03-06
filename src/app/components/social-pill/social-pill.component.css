@@ -1,0 +1,14 @@
+.social-pill {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 15px;
+  padding: 5px 10px;
+  gap: 5.75px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  color: var(--base);
+}
