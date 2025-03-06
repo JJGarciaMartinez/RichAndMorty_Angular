@@ -1,3 +1,4 @@
+@import "phosphor-css/css/index.css";
 @import "@coreui/coreui";
 
 :root {
@@ -12,6 +13,7 @@
   --contrastDetailHover: rgba(60, 120, 170);
   --contrastDetailActive: rgba(45, 102, 150);
   --contrastDetailVariant: 70, 130, 180;
+  --borderDefault: 229, 231, 235;
 
   --alive: #0c971f;
   --dead: #971c0c;

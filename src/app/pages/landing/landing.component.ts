@@ -5,7 +5,6 @@ import { RickAndMortyService } from '@services/rick-n-morty.service';
 import { CarouselLandingComponent } from '@components/carousel-landing/carousel-landing.component';
 import { LoaderSpinnerComponent } from '@components/loader-spinner/loader-spinner.component';
 import { HeroComponent } from '@components/hero/hero.component';
-import { IconComponent } from '@components/icon/icon.component';
 import { SocialPillComponent } from '@components/social-pill/social-pill.component';
 
 @Component({
