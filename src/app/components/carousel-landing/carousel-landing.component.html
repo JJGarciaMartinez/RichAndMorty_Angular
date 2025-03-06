@@ -12,8 +12,8 @@
                         <span class="item-text">
                             <h3 class="item-title" [title]="slide.title">{{slide.title}}</h3>
                             <span class="carousel-description">
-                                <app-icon iconName="circle" iconWeight="fill"
-                                    [className]="'status-' + slide.status.toLowerCase()" />
+                                <app-icon name="circle" size="lg" weight="fill"
+                                    [classIcon]="'status-' + slide.status.toLowerCase()" />
                                 {{slide.status}} - {{slide.species}}
                             </span>
                         </span>

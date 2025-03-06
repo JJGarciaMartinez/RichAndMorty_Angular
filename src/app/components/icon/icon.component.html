@@ -1,4 +1,4 @@
-<i class="ph-{{iconName}} icon-{{iconSize}} icon--color icon-class {{className}}"
-    [ngClass]="iconWeight !== 'regular' ? 'ph-' + iconWeight + ' ph-' + iconName : 'ph ph-' + iconName"
-    aria-hidden="true" role="img" [attr.aria-label]="iconName" [attr.title]="iconName" [ngStyle]="{'color': color}">
-</i>
+<span class="icon-container">
+    <i [class]="['ph', 'icon', name, weight, classIcon, 'icon-'+size]" [attr.aria-label]="name" [attr.role]="'img'"
+        aria-hidden="true" [ngStyle]="{'background-color': color}"></i>
+</span>

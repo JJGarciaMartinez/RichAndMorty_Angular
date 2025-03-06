@@ -1,53 +1,65 @@
-.icon-xs {
-  font-size: 0.75rem;
-}
-
-.icon-sm {
-  font-size: 0.875rem;
-}
-
-.icon-md {
-  font-size: 1rem;
-}
-
-.icon-lg {
-  font-size: 1.125rem;
-}
-
-.icon-xl {
-  font-size: 1.25rem;
-}
-
-.icon-2xl {
-  font-size: 1.5rem;
-}
-
-.icon-3xl {
-  font-size: 1.875rem;
-}
-
-.icon-4xl {
-  font-size: 2.25rem;
-}
-
-.icon-5xl {
-  font-size: 3rem;
-}
-
-.icon-6xl {
-  font-size: 4rem;
-}
-
-.icon-7xl {
-  font-size: 5rem;
-}
-
-.icon-8xl {
-  font-size: 6rem;
-}
-
-.icon-class {
+.icon-container {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.icon-xs {
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+}
+
+.icon-sm {
+  height: 0.875rem !important;
+  width: 0.875rem !important;
+}
+
+.icon-md {
+  height: 1rem !important;
+  width: 1rem !important;
+}
+
+.icon-lg {
+  height: 1.125rem !important;
+  width: 1.125rem !important;
+}
+
+.icon-xl {
+  height: 1.25rem !important;
+  width: 1.25rem !important;
+}
+
+.icon-2xl {
+  height: 1.5rem !important;
+  width: 1.5rem !important;
+}
+
+.icon-3xl {
+  height: 1.875rem !important;
+  width: 1.875rem !important;
+}
+
+.icon-4xl {
+  height: 2.25rem !important;
+  width: 2.25rem !important;
+}
+
+.icon-5xl {
+  height: 3rem !important;
+  width: 3rem !important;
+}
+
+.icon-6xl {
+  height: 4rem !important;
+  width: 4rem !important;
+}
+
+.icon-7xl {
+  height: 5rem !important;
+  width: 5rem !important;
+}
+
+.icon-8xl {
+  height: 6rem !important;
+  width: 6rem !important;
 }

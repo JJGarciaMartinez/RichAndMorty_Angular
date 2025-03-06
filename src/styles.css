@@ -1,3 +1,4 @@
+@import "phosphor-css/css/index.css";
 @import "@coreui/coreui";
 
 :root {
@@ -8,9 +9,11 @@
   --alternative: #464545;
   --acent: #6b8e23;
   --calid: #a0522d;
-  --contrastDetail: rgb(70, 130, 180);
+  --contrastDetail: rgba(70, 130, 180);
   --contrastDetailHover: rgba(60, 120, 170);
-  --contrastDetailActive: rgb(45, 102, 150); /* fix typo in variable name */
+  --contrastDetailActive: rgba(45, 102, 150);
+  --contrastDetailVariant: 70, 130, 180;
+  --borderDefault: 229, 231, 235;
 
   --alive: #0c971f;
   --dead: #971c0c;
@@ -24,6 +27,8 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1,
@@ -80,6 +85,10 @@ body {
     transform: scale(0.98);
     background-color: var(--contrastDetailActive);
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
 }
 
 .loader {
@@ -110,13 +119,13 @@ body {
 }
 
 .status-alive {
-  color: var(--alive) !important;
+  background-color: var(--alive) !important;
 }
 
 .status-dead {
-  color: var(--dead) !important;
+  background-color: var(--dead) !important;
 }
 
 .status-unknown {
-  color: var(--unknown) !important;
+  background-color: var(--unknown) !important;
 }

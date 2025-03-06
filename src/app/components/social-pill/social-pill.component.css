@@ -1,0 +1,37 @@
+.social-pill {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  padding: 4px 16px;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  color: var(--base);
+  border: 1px solid rgba(var(--borderDefault));
+  font-size: 0.875rem;
+  transition: all 200ms ease;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  &:focus {
+    outline: 2px solid var(--acent);
+  }
+
+  &:active {
+    transform: scale(0.98);
+    background-color: #e5e5e5;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+    & p {
+      display: none;
+    }
+  }
+}

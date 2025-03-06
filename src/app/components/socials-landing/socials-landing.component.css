@@ -1,0 +1,84 @@
+.socials-landing-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: self-start;
+  gap: 0.45rem;
+  .title-socials {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--base);
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0 0.45rem;
+    line-height: 0.85;
+    text-wrap: nowrap;
+
+    & a {
+      line-height: 0.85;
+      color: var(--contrastDetail);
+      text-decoration: none;
+      transition: all 200ms ease;
+
+      &:hover {
+        text-decoration: underline;
+        color: var(--contrastDetailHover);
+      }
+    }
+  }
+
+  .findme-container {
+    width: 100%;
+    display: flex;
+    gap: 0.1rem;
+    align-items: self-start;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 0.75rem;
+
+    .findme-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--base);
+    }
+
+    .social-links {
+      width: fit-content;
+      gap: 0.745rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  }
+
+  .additional-info {
+    font-size: 0.745rem;
+    font-weight: 500;
+    color: var(--base);
+
+    & a {
+      color: var(--contrastDetail);
+      text-decoration: none;
+      transition: all 200ms ease;
+
+      &:hover {
+        text-decoration: underline;
+        color: var(--contrastDetailHover);
+      }
+    }
+
+    @media (max-width: 768px) {
+      font-size: 0.65rem;
+      font-weight: 400;
+
+      line-height: 0.5;
+
+      & a {
+        line-height: 1;
+      }
+    }
+  }
+}

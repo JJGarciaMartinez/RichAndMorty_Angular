@@ -5,6 +5,7 @@ import { RickAndMortyService } from '@services/rick-n-morty.service';
 import { CarouselLandingComponent } from '@components/carousel-landing/carousel-landing.component';
 import { LoaderSpinnerComponent } from '@components/loader-spinner/loader-spinner.component';
 import { HeroComponent } from '@components/hero/hero.component';
+import { SocialsLandingComponent } from '@components/socials-landing/socials-landing.component';
 
 @Component({
   selector: 'app-landing',
@@ -13,6 +14,7 @@ import { HeroComponent } from '@components/hero/hero.component';
     CarouselLandingComponent,
     LoaderSpinnerComponent,
     HeroComponent,
+    SocialsLandingComponent,
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css',
