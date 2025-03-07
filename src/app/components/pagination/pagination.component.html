@@ -1,23 +1,36 @@
 <div class="pagination">
     <span class="pages-buttons">
+
+        <!-- Previous page button -->
         <button title="Go to previous page" (click)="previousPage()" [disabled]="!info.prev || isLoading">
             <app-icon name="caret-left" size="sm" weight="bold" />
         </button>
+
+        <!-- List of pages -->
         <ul class="pages-list">
+            <!-- Dots for the first pages -->
             <li *ngIf="info.prev && pageCurrent >= 3" class="">
                 <app-icon name="dots-three" size="sm" weight="bold" />
             </li>
+
+            <!-- Buttons for navigation -->
             <li *ngFor="let page of listPages | slice: (pageCurrent - 2) < 0 ? 0 : (pageCurrent - 2) : (pageCurrent + 3)"
                 [ngClass]="{ active: page === pageCurrent }">
                 <button (click)="goToPage(page)" [disabled]="isLoading">{{ page }}</button>
             </li>
+
+            <!-- Dots for the last pages -->
             <li *ngIf="info.next && pageCurrent <= info.pages - 4">
                 <app-icon name="dots-three" size="sm" weight="bold" />
             </li>
         </ul>
+
+        <!-- Next page button -->
         <button title="Go to next page" (click)="nextPage()" [disabled]="!info.next || isLoading">
             <app-icon name="caret-right" size="sm" weight="bold" />
         </button>
     </span>
+
+    <!-- Page info -->
     <p class="pages-info">Page {{ pageCurrent }} of {{ info.pages }}</p>
 </div>

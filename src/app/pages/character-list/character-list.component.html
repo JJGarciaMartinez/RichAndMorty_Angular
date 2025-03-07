@@ -1,17 +1,49 @@
 <div class="characters-container" *ngIf="characters">
-    <h1 class="characters-title">Character List <p class="characters-count">({{ info.count }})</p>
-    </h1>
+    <nav>
+        <h1 class="characters-title">Character List <p class="characters-count">({{ info.count }})</p>
+        </h1>
+
+        <div class="search-container">
+            <form (submit)="$event.preventDefault(); searchCharacter(searchInput.value, statusSelect.value)"
+                class="search-form" aria-label="Buscar personajes">
+                <input type="text" class="search-input" placeholder="Search character" id="searchInput" #searchInput />
+                <select #statusSelect class="status-select">
+                    <option value="">All Status</option>
+                    <option value="alive">Alive</option>
+                    <option value="dead">Dead</option>
+                    <option value="unknown">Unknown</option>
+                </select>
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+
+    </nav>
     <ul class="characters-list">
         <li *ngFor="let character of characters" class="character-item">
-            <img [src]="character.image" alt="{{ character.name }}">
-            <a [routerLink]="['detail', character.id]" routerLinkActive="active" ariaCurrentWhenActive="page">{{
-                character.name }}</a>
-
-            <p>{{ character.status }} - {{ character.species }}</p>
+            <div *ngIf="character.loading" class="loader">
+                <c-spinner color="secondary" />
+            </div>
+            <figure class="character-image-container"
+                [ngStyle]="{ 'background-image': 'url(' + character.image + ')' }">
+                <img [src]="character.image" alt="{{ character.name }}" loading="eager"
+                    (load)="onImageLoad(character)" />
+            </figure>
+            <span class="character-info">
+                <h1 [cTooltip]="character.name.length > 20 ? character.name : null" class="info-title">{{
+                    character.name }}</h1>
+                <div class="info-species">
+                    <span class="info-species-item">
+                        <app-icon name="circle" size="lg" weight="fill"
+                            [classIcon]="'status-' + character.status.toLowerCase()" />
+                        <p class="item-text">{{ character.status }} - {{ character.species }}</p>
+                    </span>
+                    <a class="details-btn-secondary" [routerLink]="['detail', character.id]" routerLinkActive="active"
+                        aria-current="page">More
+                        Details</a>
+                </div>
+            </span>
         </li>
     </ul>
-
-
     <span class="pagination-characters">
         <app-pagination [info]="info" [pageCurrent]="pageCurrent" [listPages]="listPages" [isLoading]="isLoading"
             (pageChange)="goToPage($event)" />
