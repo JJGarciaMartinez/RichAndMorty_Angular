@@ -8,6 +8,7 @@ import {
   CarouselItemComponent,
   SpinnerComponent,
   ThemeDirective,
+  TooltipDirective,
 } from '@coreui/angular';
 
 @Component({
@@ -22,6 +23,7 @@ import {
     SpinnerComponent,
     CommonModule,
     RouterLink,
+    TooltipDirective,
   ],
   templateUrl: './carousel-landing.component.html',
   styleUrl: './carousel-landing.component.css',
