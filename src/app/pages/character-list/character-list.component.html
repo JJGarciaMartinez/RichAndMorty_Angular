@@ -1,5 +1,6 @@
 <div class="characters-container" *ngIf="characters">
-    <h1>Character List</h1>
+    <h1 class="characters-title">Character List <p class="characters-count">({{ info.count }})</p>
+    </h1>
     <ul class="characters-list">
         <li *ngFor="let character of characters" class="character-item">
             <img [src]="character.image" alt="{{ character.name }}">
@@ -11,6 +12,8 @@
     </ul>
 
 
-    <app-pagination [info]="info" [pageCurrent]="pageCurrent" [listPages]="listPages" [isLoading]="isLoading"
-        (pageChange)="goToPage($event)" />
+    <span class="pagination-characters">
+        <app-pagination [info]="info" [pageCurrent]="pageCurrent" [listPages]="listPages" [isLoading]="isLoading"
+            (pageChange)="goToPage($event)" />
+    </span>
 </div>

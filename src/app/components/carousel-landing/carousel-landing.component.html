@@ -1,4 +1,4 @@
-<c-carousel [activeIndex]="0" (itemChange)="onItemChange($event)" [interval]="1000" transition="slide">
+<c-carousel [activeIndex]="0" (itemChange)="onItemChange($event)" [interval]="2100" transition="slide">
     <c-carousel-inner class="carousel-container">
         <c-carousel-item *ngFor="let slide of slides">
             <div class="item-container">
@@ -10,7 +10,7 @@
                         (load)="onImageLoad(slide)" />
                     <span class="item-text-container">
                         <span class="item-text">
-                            <h3 class="item-title" [title]="slide.title">{{slide.title}}</h3>
+                            <h3 [cTooltip]="slide.title" class="item-title">{{slide.title}}</h3>
                             <span class="carousel-description">
                                 <app-icon name="circle" size="lg" weight="fill"
                                     [classIcon]="'status-' + slide.status.toLowerCase()" />
