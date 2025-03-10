@@ -1,17 +1,42 @@
 <div class="characters-container" *ngIf="characters">
-    <h1 class="characters-title">Character List <p class="characters-count">({{ info.count }})</p>
-    </h1>
+    <nav class="characters-header-container">
+        <div class="characters-header-top">
+            <h1 class="characters-title">Character List</h1>
+            <span class="search-character-container">
+                <app-search-bar labelInput="Search Characters" placeholder="E.g Rick" [hasError]="errorSearch"
+                    [errorMessage]="'No results for: '+searchTerm" [query]="searchTerm"
+                    (searchChange)="searchCharacter($event)" />
+            </span>
+        </div>
+
+        <p class="characters-count">You found: {{ info.count }} characters</p>
+    </nav>
     <ul class="characters-list">
         <li *ngFor="let character of characters" class="character-item">
-            <img [src]="character.image" alt="{{ character.name }}">
-            <a [routerLink]="['detail', character.id]" routerLinkActive="active" ariaCurrentWhenActive="page">{{
-                character.name }}</a>
-
-            <p>{{ character.status }} - {{ character.species }}</p>
+            <div *ngIf="character.loading" class="loader">
+                <c-spinner color="secondary" />
+            </div>
+            <figure class="character-image-container"
+                [ngStyle]="{ 'background-image': 'url(' + character.image + ')' }">
+                <img [src]="character.image" alt="{{ character.name }}" loading="eager"
+                    (load)="onImageLoad(character)" />
+            </figure>
+            <span class="character-info">
+                <h1 [cTooltip]="character.name.length > 20 ? character.name : null" class="info-title">{{
+                    character.name }}</h1>
+                <div class="info-species">
+                    <span class="info-species-item">
+                        <app-icon name="circle" size="lg" weight="fill"
+                            [classIcon]="'status-' + character.status.toLowerCase()" />
+                        <p class="item-text">{{ character.status }} - {{ character.species }}</p>
+                    </span>
+                    <a class="details-btn-secondary" [routerLink]="['detail', character.id]" routerLinkActive="active"
+                        aria-current="page">More
+                        Details</a>
+                </div>
+            </span>
         </li>
     </ul>
-
-
     <span class="pagination-characters">
         <app-pagination [info]="info" [pageCurrent]="pageCurrent" [listPages]="listPages" [isLoading]="isLoading"
             (pageChange)="goToPage($event)" />
