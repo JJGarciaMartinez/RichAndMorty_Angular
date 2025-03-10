@@ -1,0 +1,42 @@
+<div class="searchBarContainer">
+    <label *ngIf="showLabel && labelInput" for="inputSearch" class="label-input-search">
+        {{ labelInput }}
+    </label>
+    <div class="searchBar">
+        <input type="text" (input)="onInputChange($event)" [value]="query" [placeholder]="placeholder" id="inputSearch"
+            autocomplete="off" autofocus class="search-input" />
+
+        <span class="icons">
+            <!-- If is loading -->
+            <span class="iconsLoading" *ngIf="loading">
+                <span class="firstStep">
+                    <app-icon color="rgba(60, 120, 170)" name="hourglass-high" weight="fill" />
+                </span>
+                <span class="secondStep">
+                    <app-icon color="rgba(60, 120, 170)" name="hourglass-medium" weight="fill" />
+                </span>
+                <span class="thirdStep">
+                    <app-icon color="rgba(60, 120, 170)" name="hourglass-low" weight="fill" />
+                </span>
+            </span>
+
+            <!-- If is not loading and query is not empty -->
+            <ng-container *ngIf="!loading && query.length > 0 && showClearButton">
+                <button class="button-clear-search" (click)="clearSearch()" aria-label="Clear search">
+                    <app-icon weight="bold" name="x" color="#F40000" />
+                </button>
+            </ng-container>
+
+
+            <!-- If is not loading and query is empty -->
+            <span (click)="setFocusOnInput()" class="iconsLoading"
+                *ngIf="!loading && (!query || query.length === 0) && searchIcon" style="cursor: pointer;">
+                <app-icon color="rgba(70, 130, 180)" [name]="searchIcon" />
+            </span>
+        </span>
+    </div>
+    <ng-container *ngIf="hasError && errorMessage">
+        <p class="error-message">{{ errorMessage }}</p>
+    </ng-container>
+
+</div>

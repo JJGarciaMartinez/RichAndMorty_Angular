@@ -29,9 +29,9 @@ export class RickAndMortyService {
     return this.http.get<any>(`${this.charactersURL}/${id}`);
   }
 
-  getCharacterByNameOrStatus(name: string, status: string): Observable<any> {
+  getCharacterByName(name: string, page: number = 1): Observable<any> {
     return this.http.get<any>(
-      `${this.charactersURL}/?name=${name}&status=${status}`
+      `${this.charactersURL}/?name=${name}&page=${page}`
     );
   }
 

@@ -1,22 +1,15 @@
 <div class="characters-container" *ngIf="characters">
-    <nav>
-        <h1 class="characters-title">Character List <p class="characters-count">({{ info.count }})</p>
-        </h1>
-
-        <div class="search-container">
-            <form (submit)="$event.preventDefault(); searchCharacter(searchInput.value, statusSelect.value)"
-                class="search-form" aria-label="Buscar personajes">
-                <input type="text" class="search-input" placeholder="Search character" id="searchInput" #searchInput />
-                <select #statusSelect class="status-select">
-                    <option value="">All Status</option>
-                    <option value="alive">Alive</option>
-                    <option value="dead">Dead</option>
-                    <option value="unknown">Unknown</option>
-                </select>
-                <button type="submit" class="search-button">Search</button>
-            </form>
+    <nav class="characters-header-container">
+        <div class="characters-header-top">
+            <h1 class="characters-title">Character List</h1>
+            <span class="search-character-container">
+                <app-search-bar labelInput="Search Characters" placeholder="E.g Rick" [hasError]="errorSearch"
+                    [errorMessage]="'No results for: '+searchTerm" [query]="searchTerm"
+                    (searchChange)="searchCharacter($event)" />
+            </span>
         </div>
 
+        <p class="characters-count">You found: {{ info.count }} characters</p>
     </nav>
     <ul class="characters-list">
         <li *ngFor="let character of characters" class="character-item">
