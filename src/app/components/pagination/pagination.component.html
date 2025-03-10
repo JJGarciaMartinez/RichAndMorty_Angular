@@ -1,23 +1,54 @@
-<div class="pagination">
+<div class="pagination-container">
     <span class="pages-buttons">
-        <button title="Go to previous page" (click)="previousPage()" [disabled]="!info.prev || isLoading">
-            <app-icon name="caret-left" size="sm" weight="bold" />
+
+        <!-- First page button -->
+        <button class="button-pagination" title="Go to first page" (click)=" goToPage(1)"
+            [disabled]="pageCurrent === 1   || isLoading">
+            <app-icon classIcon="navigation-icon" name="caret-line-left" size="sm" weight="bold" />
         </button>
-        <ul class="pages-list">
-            <li *ngIf="info.prev && pageCurrent >= 3" class="">
-                <app-icon name="dots-three" size="sm" weight="bold" />
+
+        <!-- Previous page button -->
+        <button class="button-pagination" title="Go to previous page" (click)="previousPage()"
+            [disabled]="!info.prev || isLoading">
+            <app-icon classIcon="navigation-icon" name="caret-left" size="sm" weight="bold" />
+        </button>
+
+        <!-- List of pages -->
+        <ul class="pages-list-container">
+
+            <!-- Dots for the first pages -->
+            <li *ngIf="info.prev && pageCurrent > 3" class="doots-container">
+                <app-icon color="rgba(45, 102, 150)" name="dots-three" size="sm" weight="bold" />
             </li>
-            <li *ngFor="let page of listPages | slice: (pageCurrent - 2) < 0 ? 0 : (pageCurrent - 2) : (pageCurrent + 3)"
-                [ngClass]="{ active: page === pageCurrent }">
-                <button (click)="goToPage(page)" [disabled]="isLoading">{{ page }}</button>
+
+            <!-- Buttons for navigation -->
+            <li *ngFor="let page of getPagesArray()" [ngClass]="{ active: page === pageCurrent }">
+                <button class="button-pagination" *ngIf="page" (click)="goToPage(page)" [disabled]="isLoading">{{ page
+                    }}</button>
+
             </li>
-            <li *ngIf="info.next && pageCurrent <= info.pages - 4">
-                <app-icon name="dots-three" size="sm" weight="bold" />
+
+            <!-- Dots for the last pages -->
+            <li *ngIf="info.next && pageCurrent < info.pages - 2" class="doots-container">
+                <app-icon color="rgba(45, 102, 150)" name="dots-three" size="sm" weight="bold" />
             </li>
+
         </ul>
-        <button title="Go to next page" (click)="nextPage()" [disabled]="!info.next || isLoading">
-            <app-icon name="caret-right" size="sm" weight="bold" />
+
+        <!-- Next page button -->
+        <button class="button-pagination" title="Go to next page" (click)="nextPage()"
+            [disabled]="!info.next || isLoading">
+            <app-icon classIcon="navigation-icon" name="caret-right" size="sm" weight="bold" />
         </button>
+
+        <!-- Last page button -->
+        <button class="button-pagination" title="Go to last page" (click)="goToPage(info.pages)"
+            [disabled]="!info.next || isLoading">
+            <app-icon classIcon="navigation-icon" name="caret-line-right" size="sm" weight="bold" />
+        </button>
+
     </span>
+
+    <!-- Page info -->
     <p class="pages-info">Page {{ pageCurrent }} of {{ info.pages }}</p>
 </div>
