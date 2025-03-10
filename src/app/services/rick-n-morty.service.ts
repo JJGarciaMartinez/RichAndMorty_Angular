@@ -72,4 +72,8 @@ export class RickAndMortyService {
   getEpisodesByPage(page: number): Observable<any> {
     return this.http.get<any>(`${this.episodesURL}?page=${page}`);
   }
+
+  getEpisodeByURL(url: string): Observable<any> {
+    return this.http.get<any>(url);
+  }
 }
