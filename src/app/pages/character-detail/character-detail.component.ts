@@ -7,9 +7,10 @@ import { getIdFromUrl } from '@utils/getIdFromUrl';
 import { setCharactersWithLoading } from '@utils/setCharactersWithLoading';
 import { CharacterItemComponent } from '@components/character-item/character-item.component';
 import { randomizeArray } from '@utils/randomizeArray';
+import { IconComponent } from '@components/icon/icon.component';
 
 @Component({
-  imports: [CommonModule, CharacterItemComponent],
+  imports: [CommonModule, CharacterItemComponent, IconComponent],
   selector: 'app-character-detail',
   templateUrl: './character-detail.component.html',
   styleUrl: './character-detail.component.css',
@@ -44,9 +45,9 @@ export class CharacterDetailComponent {
       this.episodes = data.episode;
 
       this.getRandomeEpisode();
-      console.log(this.character);
-      console.log(this.origin);
-      console.log(this.episodes);
+      // console.log(this.character);
+      // console.log(this.origin);
+      // console.log(this.episodes);
     });
   }
 
