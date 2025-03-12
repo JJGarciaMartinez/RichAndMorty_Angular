@@ -66,4 +66,15 @@
         </div>
 
     </div>
+
+    <app-carousel [showBullets]="false">
+        <li carouselSlide class="glide__slide" *ngFor="let slide of slides">
+            <div class="slide-content">
+                <img [src]="slide.image" [alt]="slide.title">
+                <div class="slide-info">
+                    <h3>{{slide.title}}</h3>
+                </div>
+            </div>
+        </li>
+    </app-carousel>
 </div>

@@ -3,6 +3,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "typeRoots": ["node_modules/@types", "src/typings.d.ts"],
     "types": ["node", "jest"],
     "baseUrl": "./src",
     "outDir": "./dist/out-tsc",
@@ -26,7 +27,8 @@
       "@pages/*": ["./app/pages/*"],
       "@utils/*": ["./utils/*"],
       "@assets/*": ["./app/assets/*"],
-      "@typesApp/*": ["./app/types/*"]
+      "@typesApp/*": ["./app/types/*"],
+      "@directives/*": ["./app/directives/*"]
     }
   },
   "angularCompilerOptions": {

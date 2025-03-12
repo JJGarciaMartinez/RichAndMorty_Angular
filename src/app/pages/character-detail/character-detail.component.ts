@@ -8,9 +8,20 @@ import { setCharactersWithLoading } from '@utils/setCharactersWithLoading';
 import { CharacterItemComponent } from '@components/character-item/character-item.component';
 import { randomizeArray } from '@utils/randomizeArray';
 import { IconComponent } from '@components/icon/icon.component';
+import {
+  CarouselComponent,
+  Slide,
+} from '@components/carousel/carousel.component';
+import { CarouselSlideDirective } from '@directives/carousel/carousel-slide.directive';
 
 @Component({
-  imports: [CommonModule, CharacterItemComponent, IconComponent],
+  imports: [
+    CommonModule,
+    CharacterItemComponent,
+    IconComponent,
+    CarouselComponent,
+    CarouselSlideDirective,
+  ],
   selector: 'app-character-detail',
   templateUrl: './character-detail.component.html',
   styleUrl: './character-detail.component.css',
@@ -24,6 +35,7 @@ export class CharacterDetailComponent {
   charactersFromRandomEpisode: string[] = [];
   characterIds: number[] = [];
   allCharactersFromEpisode: Character[] = [];
+  slides: Slide[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -44,10 +56,7 @@ export class CharacterDetailComponent {
       this.origin = data.origin;
       this.episodes = data.episode;
 
-      this.getRandomeEpisode();
-      // console.log(this.character);
-      // console.log(this.origin);
-      // console.log(this.episodes);
+      this.getRandomeEpisode(); // Fetch random episode
     });
   }
 
@@ -63,26 +72,39 @@ export class CharacterDetailComponent {
         this.episodes[Math.floor(Math.random() * this.episodes.length)]
       )
       .subscribe((data) => {
-        this.randomEpisode = data;
-        this.charactersFromRandomEpisode = data.characters;
-        this.characterIds = this.charactersFromRandomEpisode.map(
-          (url: string) => getIdFromUrl(url)
-        );
+        // Preparar todos los datos antes de actualizar propiedades
+        const episodeData = data;
+        const characters = data.characters;
+        const ids = characters.map((url: string) => getIdFromUrl(url));
 
-        this.getAllCharactersFromEpisode(); // Fetch all characters from episode
+        // Actualizar todo de una vez para minimizar renderizados
+        this.randomEpisode = episodeData;
+        this.charactersFromRandomEpisode = characters;
+        this.characterIds = ids;
+
+        this.updateSlides(); // Update slides param with characters from episode
+        this.getAllCharactersFromEpisode(ids); // Fetch all characters from episode
       });
   }
 
   // Fetch multiple characters
-  async getAllCharactersFromEpisode() {
+  async getAllCharactersFromEpisode(ids: number[]) {
     // console.log(this.characterIds);
-    this.rickAndMortyService
-      .getMultipleCharacters(this.characterIds)
-      .subscribe((data) => {
-        // console.log(data); // Array of characters
-        // Randomize the order of characters
-        const shuffledData = randomizeArray(data);
-        this.allCharactersFromEpisode = setCharactersWithLoading(shuffledData);
-      });
+    this.rickAndMortyService.getMultipleCharacters(ids).subscribe((data) => {
+      // console.log(data); // Array of characters
+      // Randomize the order of characters
+      const shuffledData = randomizeArray(data);
+      this.allCharactersFromEpisode = setCharactersWithLoading(shuffledData);
+      this.updateSlides();
+    });
+  }
+
+  // Update slides with characters from episode
+  private updateSlides() {
+    this.slides = this.allCharactersFromEpisode.map((character) => ({
+      image: character.image,
+      title: character.name,
+      description: character.status,
+    }));
   }
 }
