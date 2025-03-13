@@ -1,12 +1,80 @@
-<div>
-    <h1>{{ character.name }}</h1>
-    <img [src]="character.image" alt="{{ character.name }}">
-    <p>Status: {{ character.status }}</p>
-    <p>Species: {{ character.species }}</p>
+<div class="character-detail-main-container">
+    <nav class="character-detail-nav">
+        <p class="page-title">Character Detail Page</p>
 
-    <p>Origin: {{ character.origin?.name }}</p>
-    <p>Location: {{ character.location?.name }}</p>
+        <button class="details-btn-primary" (click)="goBack()">
+            <app-icon name="caret-left" weight="bold" />
+            Back
+        </button>
+    </nav>
 
-    <button (click)="goBack()">Back</button>
+    <div class="character-detail-container">
 
+        <div class="character-detail-info-container">
+            <figure class="character-detail-image-container">
+                <img [src]="character.image" alt="{{ character.name }}">
+            </figure>
+            <div class="character-detail">
+                <span class="character-detail-info">
+                    <p class="character-info-title">Name:</p>
+                    <h1 class="character-info">{{ character.name }}</h1>
+                </span>
+                <span class="character-detail-info">
+                    <p class="character-info-title">Status & Species:</p>
+                    <span class="character-info-container">
+                        <app-icon name="circle" size="xl" weight="fill"
+                            [classIcon]="'status-' + (character && character.status ? character.status.toLowerCase() : 'unknown')" />
+                        <h1 class="character-info">{{ character.status }} - {{ character.species }}</h1>
+                    </span>
+                </span>
+                <span class="character-detail-info-sm">
+                    <p class="character-info-title">Origin:</p>
+                    <h1 class="character-info">{{ character && character.origin ? character.origin.name : 'Unknown' }}
+                    </h1>
+                </span>
+                <span class="character-detail-info-sm">
+                    <p class="character-info-title">Location:</p>
+                    <h1 class="character-info">{{ character && character.location ? character.location.name : 'Unknown'
+                        }}</h1>
+                </span>
+                <span class="character-detail-info-sm">
+                    <p class="character-info-title">Gender:</p>
+                    <h1 class="character-info">{{ character && character.gender ? character.gender : 'Unknown' }}</h1>
+                </span>
+
+                <p class="episode-count" *ngIf="character.episode">
+                    Appears in
+                    <u>{{ character.episode.length }}</u> episodes.
+                </p>
+            </div>
+        </div>
+
+
+
+        <div class="related-episodes-container">
+            <h2 class="related-episodes-title">Characters from related episodes:</h2>
+            <ul class="characters-related">
+                <li *ngFor="let character of allCharactersFromEpisode" class="character-related">
+                    <app-character-item [customUrl]="'../' + character.id" [status]="character.status"
+                        [species]="character.species" [id]="character.id" [image]="character.image"
+                        [isLoading]="character.loading" [name]="character.name" [character]="character" />
+                </li>
+                <li *ngIf="allCharactersFromEpisode.length === 0">
+                    <p>No characters found for this episode.</p>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <app-carousel [showBullets]="false">
+        <li carouselSlide class="glide__slide" *ngFor="let slide of slides">
+            <div class="slide-content">
+                <img [src]="slide.image" [alt]="slide.title">
+                <div class="slide-info">
+                    <h3>{{slide.title}}</h3>
+                </div>
+            </div>
+        </li>
+    </app-carousel>
 </div>

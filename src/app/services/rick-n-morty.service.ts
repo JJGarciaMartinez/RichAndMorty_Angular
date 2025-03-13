@@ -45,6 +45,11 @@ export class RickAndMortyService {
     );
   }
 
+  getMultipleCharacters(ids: number[]): Observable<any> {
+    // console.log(`${this.charactersURL}/${ids}`);
+    return this.http.get<any>(`${this.charactersURL}/${ids}`);
+  }
+
   // Location services
 
   getAllLocations(): Observable<any> {
@@ -59,6 +64,10 @@ export class RickAndMortyService {
     return this.http.get<any>(`${this.locationsURL}?page=${page}`);
   }
 
+  getMultipleLocations(ids: number[]): Observable<any> {
+    return this.http.get<any>(`${this.locationsURL}/${ids}`);
+  }
+
   // Episode services
 
   getAllEpisodes(): Observable<any> {
@@ -71,5 +80,9 @@ export class RickAndMortyService {
 
   getEpisodesByPage(page: number): Observable<any> {
     return this.http.get<any>(`${this.episodesURL}?page=${page}`);
+  }
+
+  getEpisodeByURL(url: string): Observable<any> {
+    return this.http.get<any>(url);
   }
 }

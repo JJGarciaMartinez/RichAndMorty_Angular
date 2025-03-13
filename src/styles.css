@@ -1,5 +1,7 @@
 @import "phosphor-css/css/index.css";
 @import "@coreui/coreui";
+@import "~@glidejs/glide/dist/css/glide.core.min.css";
+@import "~@glidejs/glide/dist/css/glide.theme.min.css";
 
 :root {
   margin: 0;
@@ -63,6 +65,7 @@
   color: #333;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
+  list-style: none;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -74,6 +77,12 @@ h5,
 h6,
 p {
   margin: 0;
+}
+
+ul,
+li {
+  margin: 0;
+  list-style: none;
 }
 
 body {
@@ -92,6 +101,16 @@ body {
   cursor: pointer;
   transition: all 200ms ease;
   text-decoration: none;
+  text-wrap: nowrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  .icon {
+    background-color: var(--neutro);
+  }
 
   &:hover {
     background-color: var(--contrastDetailHover);
@@ -121,10 +140,24 @@ body {
   cursor: pointer;
   transition: all 200ms ease;
   text-decoration: none;
+  text-wrap: nowrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  .icon {
+    background-color: var(--contrastDetail);
+  }
 
   &:hover {
     color: var(--neutro);
     background-color: var(--contrastDetailHover);
+
+    .icon {
+      background-color: var(--neutro);
+    }
   }
 
   &:focus {
@@ -135,6 +168,10 @@ body {
     color: var(--neutro);
     transform: scale(0.98) !important;
     background-color: var(--contrastDetailActive);
+
+    .icon {
+      background-color: var(--neutro);
+    }
   }
 
   @media (max-width: 768px) {

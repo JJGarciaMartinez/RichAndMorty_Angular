@@ -13,28 +13,9 @@
     </nav>
     <ul class="characters-list">
         <li *ngFor="let character of characters" class="character-item">
-            <div *ngIf="character.loading" class="loader">
-                <c-spinner color="secondary" />
-            </div>
-            <figure class="character-image-container"
-                [ngStyle]="{ 'background-image': 'url(' + character.image + ')' }">
-                <img [src]="character.image" alt="{{ character.name }}" loading="eager"
-                    (load)="onImageLoad(character)" />
-            </figure>
-            <span class="character-info">
-                <h1 [cTooltip]="character.name.length > 20 ? character.name : null" class="info-title">{{
-                    character.name }}</h1>
-                <div class="info-species">
-                    <span class="info-species-item">
-                        <app-icon name="circle" size="lg" weight="fill"
-                            [classIcon]="'status-' + character.status.toLowerCase()" />
-                        <p class="item-text">{{ character.status }} - {{ character.species }}</p>
-                    </span>
-                    <a class="details-btn-secondary" [routerLink]="['detail', character.id]" routerLinkActive="active"
-                        aria-current="page">More
-                        Details</a>
-                </div>
-            </span>
+            <app-character-item [status]="character.status" [isLoading]="character.loading" [image]="character.image"
+                [id]="character.id" [name]="character.name" [species]="character.species" [character]="character"
+                (onImageLoad)="onImageLoad($event)" />
         </li>
     </ul>
     <span class="pagination-characters">

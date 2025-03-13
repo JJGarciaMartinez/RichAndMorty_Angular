@@ -3,10 +3,11 @@ import { RickAndMortyService } from '@services/rick-n-morty.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PaginationComponent } from '@components/pagination/pagination.component';
-import { SpinnerComponent, TooltipDirective } from '@coreui/angular';
-import { IconComponent } from '@components/icon/icon.component';
 import { SearchBarComponent } from '@components/search-bar/search-bar.component';
 import { QuerysService } from '@services/querys.service';
+import { CharacterItemComponent } from '@components/character-item/character-item.component';
+import { setCharactersWithLoading } from '@utils/setCharactersWithLoading';
+import { Character } from '@typesApp/characterType';
 
 @Component({
   selector: 'app-character-list',
@@ -14,16 +15,14 @@ import { QuerysService } from '@services/querys.service';
     RouterModule,
     CommonModule,
     PaginationComponent,
-    SpinnerComponent,
-    IconComponent,
-    TooltipDirective,
     SearchBarComponent,
+    CharacterItemComponent,
   ],
   templateUrl: './character-list.component.html',
   styleUrl: './character-list.component.css',
 })
 export class CharacterListComponent {
-  characters: any = [];
+  characters: Character[] = [];
   info: any = {
     count: 0,
     pages: 1,
@@ -121,10 +120,7 @@ export class CharacterListComponent {
   }
 
   private updateCharacterData(data: any) {
-    this.characters = data.results.map((character: any) => ({
-      ...character,
-      loading: true,
-    }));
+    this.characters = setCharactersWithLoading(data.results);
     this.info = data.info;
     this.listPages = Array.from({ length: this.info.pages }, (_, i) => i + 1);
     this.errorSearch = false;

@@ -1,0 +1,37 @@
+<div class="glide" #glideElement>
+    <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+            <!-- Usamos ng-content para permitir insertar contenido personalizado -->
+            <ng-content select="[carouselSlide]"></ng-content>
+
+            <!-- Usamos ngFor para recorrer los slides -->
+            <ng-container *ngIf="!hasProjectedContent() && slides && slides.length > 0">
+                <li class="glide__slide" *ngFor="let slide of slides">
+                    <div class="slide-content">
+                        <img [src]="slide.image" [alt]="slide.title">
+                        <div class="slide-info">
+                            <h3>{{slide.title}}</h3>
+                            <p>{{slide.description}}</p>
+                        </div>
+                    </div>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+
+    <!-- Controles -->
+    <div class="glide__arrows" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
+            <app-icon name="caret-left" weight="bold"></app-icon>
+        </button>
+        <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
+            <app-icon name="caret-right" weight="bold"></app-icon>
+        </button>
+    </div>
+
+    <!-- Puntos de navegación (opcional) -->
+    <div *ngIf="showBullets" class="glide__bullets" data-glide-el="controls[nav]">
+        <button class="glide__bullet" *ngFor="let slide of slideItems || slides; index as i"
+            [attr.data-glide-dir]="'=' + i"></button>
+    </div>
+</div>
