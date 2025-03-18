@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { filterNoEmptyParams } from '@utils/helper';
 
 @Injectable({
   providedIn: 'root',
@@ -8,6 +9,35 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class QuerysService {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
+  getCurrentQueryParams(): Params {
+    // snapshot is a property that returns the current state of the route
+    return this.route.snapshot.queryParams;
+  }
+
+  updateQueryParam(newParam: Params): Promise<boolean> {
+    const mergedParams = {
+      ...this.getCurrentQueryParams(),
+      ...newParam,
+    };
+
+    return this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: filterNoEmptyParams(mergedParams),
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  removeQueryParams(paramsToRemove: string[]): Promise<boolean> {
+    const currentParams = { ...this.getCurrentQueryParams() };
+    paramsToRemove.forEach((param) => delete currentParams[param]);
+
+    return this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: currentParams,
+    });
+  }
+
+  //! Apartir de aqui se encuentra el antiguo código (se requiere refactorización en el resto del proyecto)
   async addQueryParams(params: { [key: string]: string }): Promise<void> {
     let queryParams = new HttpParams();
     for (const key in params) {

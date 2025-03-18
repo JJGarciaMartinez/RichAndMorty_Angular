@@ -1,16 +1,53 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
+import { ApiResponse } from '@typesApp/interfacesRM';
+import { QuerysService } from './querys.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RickAndMortyService {
+  private baseURL = 'https://rickandmortyapi.com/api';
+
+  // Signals globals
+  isLoading = signal(false);
+  hasError = signal(false);
+
+  constructor(private http: HttpClient, private querys: QuerysService) {}
+
+  private getResourse<T>(
+    endpoint: string,
+    params?: Record<string, string | number>
+  ): Observable<ApiResponse> {
+    this.isLoading.set(true);
+    this.hasError.set(false);
+
+    if (params) {
+      const params = this.querys.getCurrentQueryParams();
+    }
+
+    return this.http.get<ApiResponse>(`${this.baseURL}/${endpoint}`).pipe(
+      tap(() => this.isLoading.set(false)),
+      catchError(() => {
+        this.isLoading.set(false);
+        this.hasError.set(true);
+        return of({
+          info: {
+            count: 0,
+            pages: 0,
+            next: null,
+            prev: null,
+          },
+          results: [],
+        });
+      })
+    );
+  }
+
   private charactersURL = 'https://rickandmortyapi.com/api/character';
   private locationsURL = 'https://rickandmortyapi.com/api/location';
   private episodesURL = 'https://rickandmortyapi.com/api/episode';
-
-  constructor(private http: HttpClient) {}
 
   // Character services
   getCharacters(): Observable<any> {
