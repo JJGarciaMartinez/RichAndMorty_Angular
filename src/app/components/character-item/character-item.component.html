@@ -1,6 +1,6 @@
 <div class="character-item">
-    <div *ngIf="isLoading" class="loader">
-        <c-spinner color="secondary" />
+    <div *ngIf="isLoading">
+        <app-loader-spinner />
     </div>
     <figure class="character-image-container" [ngStyle]="{ 'background-image': 'url(' + image + ')' }">
         <img [src]="image" alt="{{ name }}" loading="eager" (load)="onImageLoad(character)" />

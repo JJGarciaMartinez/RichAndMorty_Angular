@@ -7,6 +7,7 @@
  * @returns {any[]} Shuffled array
  */
 
-export const randomizeArray = (array: any[]): any[] => {
+export const randomizeArray = <T>(array: T[]): T[] => {
+  console.log(array);
   return [...array].sort(() => Math.random() - 0.5);
 };

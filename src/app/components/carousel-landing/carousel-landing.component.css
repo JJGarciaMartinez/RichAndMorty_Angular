@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: nowrap;
 
   &:hover {
     .item-content {
@@ -20,6 +21,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: nowrap;
   }
 
   .item-content {

@@ -1,7 +1,6 @@
 <div class="loader">
-    <c-spinner color="secondary" />
+    <c-spinner [color]="color" *ngIf="!isJustText" />
     <ng-container *ngIf="text">
         <p class="loader-text">{{ text }}</p>
     </ng-container>
-
 </div>

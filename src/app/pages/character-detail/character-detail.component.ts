@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RickAndMortyService } from '@services/rick-n-morty.service';
-import { Character } from '@typesApp/characterType';
 import { getIdFromUrl } from '@utils/getIdFromUrl';
 import { setCharactersWithLoading } from '@utils/setCharactersWithLoading';
 import { CharacterItemComponent } from '@components/character-item/character-item.component';
@@ -13,6 +12,7 @@ import {
   Slide,
 } from '@components/carousel/carousel.component';
 import { CarouselSlideDirective } from '@directives/carousel/carousel-slide.directive';
+import { Character } from '@typesApp/interfacesRM';
 
 @Component({
   imports: [
@@ -51,7 +51,7 @@ export class CharacterDetailComponent {
 
   async fetchCharacter(id: number) {
     // Fetch character by id
-    this.rickAndMortyService.getCharacter(id).subscribe((data) => {
+    this.rickAndMortyService.getCharactersDetails(id).subscribe((data) => {
       this.character = data;
       this.origin = data.origin;
       this.episodes = data.episode;
@@ -93,8 +93,13 @@ export class CharacterDetailComponent {
     this.rickAndMortyService.getMultipleCharacters(ids).subscribe((data) => {
       // console.log(data); // Array of characters
       // Randomize the order of characters
-      const shuffledData = randomizeArray(data);
-      this.allCharactersFromEpisode = setCharactersWithLoading(shuffledData);
+      const charactersArray = Array.isArray(data)
+        ? data
+        : (data as any).results || [];
+      const shuffledData = randomizeArray(charactersArray);
+      this.allCharactersFromEpisode = setCharactersWithLoading(
+        shuffledData as Character[]
+      );
       this.updateSlides();
     });
   }

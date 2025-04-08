@@ -1,6 +1,7 @@
 .small-cards-main {
   position: relative;
   width: 100%;
+  min-width: 250px;
   height: fit-content;
   margin: 1rem 0;
   display: flex;

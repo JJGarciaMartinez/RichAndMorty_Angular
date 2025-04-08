@@ -3,9 +3,8 @@
         <c-carousel-item *ngFor="let slide of slides">
             <div class="item-container">
                 <span class="item-content">
-                    <div *ngIf="slide.loading" class="loader">
-                        <c-spinner color="secondary" />
-                    </div> <!-- Loader -->
+                    <app-loader-spinner style="position: absolute; width: 100%; height: 100%; inset: 0;"
+                        *ngIf="slide.loading" />
                     <img [src]="slide.src" alt="{{slide.title}}" class="image-carousel" loading="eager"
                         (load)="onImageLoad(slide)" />
                     <span class="item-text-container">

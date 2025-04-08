@@ -6,13 +6,11 @@ import { CarouselLandingComponent } from '@components/carousel-landing/carousel-
 import { LoaderSpinnerComponent } from '@components/loader-spinner/loader-spinner.component';
 import { HeroComponent } from '@components/hero/hero.component';
 import { SocialsLandingComponent } from '@components/socials-landing/socials-landing.component';
-import {
-  InfoCharacters,
-  InfoEpisodes,
-  InfoLocations,
-} from '@typesApp/infoDataRickNMorty';
+
 import { RouterLink } from '@angular/router';
 import { SmallCardsComponent } from '@components/small-cards/small-cards.component';
+import { Character, Episode, InfoData, Location } from '@typesApp/interfacesRM';
+import { map, Observable, shareReplay } from 'rxjs';
 
 @Component({
   selector: 'app-landing',
@@ -32,14 +30,15 @@ export class LandingComponent implements OnInit {
   slides: any[] = [];
   isLoading = false;
 
-  infoCharacters: InfoCharacters = { count: 0, pages: 0, next: '', prev: '' };
-  characters: any[] = [];
+  infoCharacters$: Observable<InfoData> = new Observable<InfoData>();
+  characters$: Observable<Character[]> = new Observable<Character[]>();
+  characterImages$: Observable<string[]> = new Observable<string[]>();
 
-  infoEpisodes: InfoEpisodes = { count: 0, pages: 0, next: '', prev: '' };
-  episodes: any[] = [];
+  infoEpisodes$: Observable<InfoData> = new Observable<InfoData>();
+  episodes$: Observable<Episode[]> = new Observable<Episode[]>();
 
-  infoLocations: InfoLocations = { count: 0, pages: 0, next: '', prev: '' };
-  locations: any[] = [];
+  infoLocations$: Observable<InfoData> = new Observable<InfoData>();
+  locations$: Observable<Location[]> = new Observable<Location[]>();
 
   constructor(private rickAndMortyService: RickAndMortyService) {}
 
@@ -57,7 +56,7 @@ export class LandingComponent implements OnInit {
     // console.log('Carousel slides', this.slides);
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.isLoading = true;
     this.rickAndMortyService.getRandomPage().subscribe(async (data) => {
       if (!data.ok) {
@@ -67,29 +66,26 @@ export class LandingComponent implements OnInit {
       this.isLoading = false;
     });
 
-    this.rickAndMortyService
-      .getCharacters()
-      .subscribe(({ results: characters, info: infoCharacters }) => {
-        this.characters = characters;
-        this.infoCharacters = infoCharacters;
-      });
+    const charactersResponse$ = this.rickAndMortyService.getCharacters().pipe(
+      shareReplay(1) // Cache the response to prevent multiple HTTP requests
+    );
 
-    this.rickAndMortyService
+    this.characters$ = charactersResponse$.pipe(map(({ results }) => results));
+    this.infoCharacters$ = charactersResponse$.pipe(map(({ info }) => info));
+    this.characterImages$ = charactersResponse$.pipe(
+      map(({ results }) => results.map((character) => character.image))
+    );
+
+    const episodesResponse$ = this.rickAndMortyService
       .getAllEpisodes()
-      .subscribe(({ results: episodes, info: infoEpisodes }) => {
-        this.infoEpisodes = infoEpisodes;
-        this.episodes = episodes;
-      });
+      .pipe(shareReplay(1));
+    this.episodes$ = episodesResponse$.pipe(map(({ results }) => results));
+    this.infoEpisodes$ = episodesResponse$.pipe(map(({ info }) => info));
 
-    this.rickAndMortyService
+    const locationsResponse$ = this.rickAndMortyService
       .getAllLocations()
-      .subscribe(({ results: locations, info: infoLocations }) => {
-        this.infoLocations = infoLocations;
-        this.locations = locations;
-      });
-  }
-
-  getCharactersImages(): string[] {
-    return this.characters.map((character) => character.image);
+      .pipe(shareReplay(1));
+    this.locations$ = locationsResponse$.pipe(map(({ results }) => results));
+    this.infoLocations$ = locationsResponse$.pipe(map(({ info }) => info));
   }
 }

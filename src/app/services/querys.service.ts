@@ -1,17 +1,37 @@
 import { Injectable } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { filterNoEmptyParams } from '@utils/helper';
+import { BehaviorSubject, filter, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QuerysService {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  // BehaviorSubject para mantener estado de parámetros sincronizado
+  private queryParamsSubject = new BehaviorSubject<Params>({});
+
+  // Observable público para que los servicios se suscriban a cambios
+  public queryParams$: Observable<Params> =
+    this.queryParamsSubject.asObservable();
+
+  constructor(private router: Router, private route: ActivatedRoute) {
+    // Inicializar con los parámetros actuales
+    this.queryParamsSubject.next(this.getCurrentQueryParams());
+
+    // Escuchar cambios de navegación para mantener el estado actualizado
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.queryParamsSubject.next(this.getCurrentQueryParams());
+      });
+  }
 
   getCurrentQueryParams(): Params {
-    // snapshot is a property that returns the current state of the route
     return this.route.snapshot.queryParams;
+  }
+
+  getQueryParam(): { [key: string]: string } {
+    return this.router.parseUrl(this.router.url).queryParams;
   }
 
   updateQueryParam(newParam: Params): Promise<boolean> {
@@ -22,8 +42,7 @@ export class QuerysService {
 
     return this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: filterNoEmptyParams(mergedParams),
-      queryParamsHandling: 'merge',
+      queryParams: filterNoEmptyParams(mergedParams), // filterNoEmptyParams is a helper function that removes the empty values from the object
     });
   }
 
@@ -35,50 +54,5 @@ export class QuerysService {
       relativeTo: this.route,
       queryParams: currentParams,
     });
-  }
-
-  //! Apartir de aqui se encuentra el antiguo código (se requiere refactorización en el resto del proyecto)
-  async addQueryParams(params: { [key: string]: string }): Promise<void> {
-    let queryParams = new HttpParams();
-    for (const key in params) {
-      if (params.hasOwnProperty(key)) {
-        queryParams = queryParams.set(key, params[key]);
-      }
-    }
-
-    const urlTree = this.router.createUrlTree([], {
-      relativeTo: this.route,
-      queryParams: queryParams
-        .keys()
-        .reduce((acc: { [key: string]: string | null }, key: string) => {
-          acc[key] = queryParams.get(key);
-          return acc; // acc = accumulator (acumulador) to store the values
-        }, {}),
-      queryParamsHandling: 'merge',
-    });
-
-    this.router.navigateByUrl(urlTree);
-  }
-
-  async clearQueryParams(params: string[]): Promise<void> {
-    const queryParams = params.reduce(
-      (acc: { [key: string]: string | null }, key: string) => {
-        acc[key] = null;
-        return acc; // acc = accumulator (acumulador) to store the values
-      },
-      {}
-    );
-
-    const urlTree = this.router.createUrlTree([], {
-      relativeTo: this.route,
-      queryParams,
-      queryParamsHandling: 'merge',
-    });
-
-    this.router.navigateByUrl(urlTree);
-  }
-
-  getQueryParams(): { [key: string]: string } {
-    return this.router.parseUrl(this.router.url).queryParams;
   }
 }

@@ -2,18 +2,19 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { IconComponent } from '@components/icon/icon.component';
-import { SpinnerComponent, TooltipDirective } from '@coreui/angular';
-import { Character } from '@typesApp/characterType';
+import { TooltipDirective } from '@coreui/angular';
+import { LoaderSpinnerComponent } from '../loader-spinner/loader-spinner.component';
+import { Character } from '@typesApp/interfacesRM';
 
 @Component({
   selector: 'app-character-item',
   imports: [
     TooltipDirective,
     RouterModule,
-    SpinnerComponent,
     CommonModule,
     IconComponent,
     RouterLink,
+    LoaderSpinnerComponent,
   ],
   templateUrl: './character-item.component.html',
   styleUrl: './character-item.component.css',

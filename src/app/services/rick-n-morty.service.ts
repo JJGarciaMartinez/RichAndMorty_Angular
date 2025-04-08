@@ -1,8 +1,9 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of, tap } from 'rxjs';
-import { ApiResponse } from '@typesApp/interfacesRM';
+import { ApiResponse, Character } from '@typesApp/interfacesRM';
 import { QuerysService } from './querys.service';
+import { Params } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -11,69 +12,81 @@ export class RickAndMortyService {
   private baseURL = 'https://rickandmortyapi.com/api';
 
   // Signals globals
-  isLoading = signal(false);
-  hasError = signal(false);
+  isLoading = signal<boolean>(false);
+  hasError = signal<boolean>(false);
 
   constructor(private http: HttpClient, private querys: QuerysService) {}
 
-  private getResourse<T>(
-    endpoint: string,
-    params?: Record<string, string | number>
-  ): Observable<ApiResponse> {
+  private fetchResource<T>(
+    endpoint: string, // endpoint is the path of the API
+    allowedParams: string[] = [] // allowedParams is an array of strings that contains the allowed query params
+  ): Observable<ApiResponse<T>> {
     this.isLoading.set(true);
     this.hasError.set(false);
 
-    if (params) {
-      const params = this.querys.getCurrentQueryParams();
-    }
+    // The querys service is used to get the current query params
+    const params = this.querys.getCurrentQueryParams();
+    const filteredParams = this.filterParams(params, allowedParams);
+    // filterParams is a function that filters the query params that are allowed to be used
 
-    return this.http.get<ApiResponse>(`${this.baseURL}/${endpoint}`).pipe(
-      tap(() => this.isLoading.set(false)),
-      catchError(() => {
-        this.isLoading.set(false);
-        this.hasError.set(true);
-        return of({
-          info: {
-            count: 0,
-            pages: 0,
-            next: null,
-            prev: null,
-          },
-          results: [],
-        });
-      })
-    );
+    console.log(filteredParams);
+    return this.http
+      .get<ApiResponse<T>>(
+        `${this.baseURL}/${endpoint}?${new URLSearchParams(filteredParams)}`
+      )
+      .pipe(
+        tap(() => this.isLoading.set(false)),
+        catchError(() => {
+          this.isLoading.set(false);
+          this.hasError.set(true);
+          console.log('Error');
+          return of({
+            info: {
+              count: 0,
+              pages: 0,
+              next: '',
+              prev: '',
+            },
+            results: [],
+          } as ApiResponse<T>);
+        })
+      );
+  }
+
+  // This function filters the query params that are allowed to be used
+  private filterParams(
+    params: Params,
+    allowed: string[]
+  ): Record<string, string> {
+    return Object.entries(params)
+      .filter(([key]) => allowed.includes(key))
+      .reduce(
+        (acc, [key, value]) => ({
+          ...acc,
+          [key]: String(value),
+        }),
+        {}
+      );
+
+    // acc = accumulator (acumulador) to store the values, is equivalent to the object that will be returned
   }
 
   private charactersURL = 'https://rickandmortyapi.com/api/character';
   private locationsURL = 'https://rickandmortyapi.com/api/location';
   private episodesURL = 'https://rickandmortyapi.com/api/episode';
 
-  // Character services
-  getCharacters(): Observable<any> {
-    return this.http.get<any>(this.charactersURL);
+  // This function is used to get the characters
+  getCharacters(): Observable<ApiResponse<Character>> {
+    return this.fetchResource<Character>('character', [
+      'page',
+      'name',
+      'status',
+    ]);
   }
 
-  getNextPage(url: string): Observable<any> {
-    return this.http.get<any>(url);
-  }
-
-  getPreviousPage(url: string): Observable<any> {
-    return this.http.get<any>(url);
-  }
-
-  getCharacter(id: number): Observable<any> {
-    return this.http.get<any>(`${this.charactersURL}/${id}`);
-  }
-
-  getCharacterByName(name: string, page: number = 1): Observable<any> {
-    return this.http.get<any>(
-      `${this.charactersURL}/?name=${name}&page=${page}`
-    );
-  }
-
-  getCharactersByPage(page: number): Observable<any> {
-    return this.http.get<any>(`${this.charactersURL}?page=${page}`);
+  // This function is used to get the details of a character
+  getCharactersDetails(id: number): Observable<Character> {
+    return this.http.get<Character>(`${this.baseURL}/character/${id}`);
   }
 
   getRandomPage(): Observable<any> {
@@ -82,8 +95,7 @@ export class RickAndMortyService {
     );
   }
 
-  getMultipleCharacters(ids: number[]): Observable<any> {
-    // console.log(`${this.charactersURL}/${ids}`);
+  getMultipleCharacters(ids: number[]): Observable<ApiResponse<Character>> {
     return this.http.get<any>(`${this.charactersURL}/${ids}`);
   }
 

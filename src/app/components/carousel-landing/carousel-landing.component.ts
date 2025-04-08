@@ -6,10 +6,10 @@ import {
   CarouselComponent,
   CarouselInnerComponent,
   CarouselItemComponent,
-  SpinnerComponent,
   ThemeDirective,
   TooltipDirective,
 } from '@coreui/angular';
+import { LoaderSpinnerComponent } from '@components/loader-spinner/loader-spinner.component';
 
 @Component({
   selector: 'app-carousel-landing',
@@ -20,10 +20,10 @@ import {
     NgFor,
     CarouselItemComponent,
     IconComponent,
-    SpinnerComponent,
     CommonModule,
     RouterLink,
     TooltipDirective,
+    LoaderSpinnerComponent,
   ],
   templateUrl: './carousel-landing.component.html',
   styleUrl: './carousel-landing.component.css',

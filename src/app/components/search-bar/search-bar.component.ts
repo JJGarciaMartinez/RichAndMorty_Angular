@@ -1,24 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormModule } from '@coreui/angular';
 import { QuerysService } from '@services/querys.service';
 import { IconComponent } from '@components/icon/icon.component';
 
 @Component({
   selector: 'app-search-bar',
-  imports: [FormModule, CommonModule, IconComponent],
+  imports: [CommonModule, IconComponent],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',
 })
 export class SearchBarComponent {
-  @Input() query = '';
-  @Input() placeholder = 'Search...';
-  @Input() showLabel = true;
-  @Input() labelInput = 'Search';
-  @Input() showClearButton = true;
-  @Input() searchIcon = 'magnifying-glass';
-  @Input() hasError = false;
-  @Input() errorMessage = 'No results found';
+  @Input() param: string = 'search';
+  @Input() query: string = '';
+  @Input() placeholder: string = 'Search...';
+  @Input() showLabel: boolean = true;
+  @Input() labelInput: string = 'Search';
+  @Input() showClearButton: boolean = true;
+  @Input() searchIcon: string = 'magnifying-glass';
+  @Input() hasError: boolean = false;
+  @Input() errorMessage: string = 'No results found';
   @Output() searchChange = new EventEmitter<string>();
 
   loading = false;
@@ -39,12 +39,12 @@ export class SearchBarComponent {
     this.debounceTimeout = setTimeout(async () => {
       if (this.query) {
         this.searchChange.emit(this.query);
-        await this.queryService.addQueryParams({ search: this.query });
+        await this.queryService.updateQueryParam({ [this.param]: this.query });
         this.loading = false;
       } else {
         this.loading = false;
         this.searchChange.emit('');
-        await this.queryService.clearQueryParams(['search']);
+        await this.queryService.removeQueryParams([this.param]);
       }
     }, 950);
 
@@ -55,7 +55,7 @@ export class SearchBarComponent {
   clearSearch(): void {
     this.query = '';
     this.searchChange.emit('');
-    this.queryService.clearQueryParams(['search']);
+    this.queryService.removeQueryParams([this.param]);
   }
 
   setFocusOnInput(): void {

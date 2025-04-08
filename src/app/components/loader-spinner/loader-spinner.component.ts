@@ -10,4 +10,6 @@ import { SpinnerComponent } from '@coreui/angular';
 })
 export class LoaderSpinnerComponent {
   @Input() text: string = '';
+  @Input() color?: string = 'secondary';
+  @Input() isJustText?: boolean = false;
 }

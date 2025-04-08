@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RickAndMortyService } from '@services/rick-n-morty.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -7,7 +7,8 @@ import { SearchBarComponent } from '@components/search-bar/search-bar.component'
 import { QuerysService } from '@services/querys.service';
 import { CharacterItemComponent } from '@components/character-item/character-item.component';
 import { setCharactersWithLoading } from '@utils/setCharactersWithLoading';
-import { Character } from '@typesApp/characterType';
+import { ApiResponse, Character, InfoData } from '@typesApp/interfacesRM';
+import { catchError, Observable, of, shareReplay, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-character-list',
@@ -22,113 +23,127 @@ import { Character } from '@typesApp/characterType';
   styleUrl: './character-list.component.css',
 })
 export class CharacterListComponent {
-  characters: Character[] = [];
-  info: any = {
-    count: 0,
-    pages: 1,
-    next: '',
-    prev: '',
-    page: 1,
-  };
-  pageCurrent = 1;
+  characters$: Observable<ApiResponse<Character>> = new Observable<
+    ApiResponse<Character>
+  >();
+  info: InfoData = {} as InfoData;
+  pageCurrent = signal<number>(1);
   listPages: number[] = [];
-  isLoading = false;
   searchTerm: string = ''; // Variable to store the search term
   errorSearch: boolean = false;
 
+  defaultParams = ['name', 'page'];
+
+  // Subscription to manage the observables
+  private subscriptions: Subscription = new Subscription();
+
   constructor(
-    private rickAndMortyService: RickAndMortyService,
+    public rickAndMortyService: RickAndMortyService,
     private queryService: QuerysService
   ) {}
 
-  async ngOnInit() {
-    await this.fetchCharacters();
+  ngOnInit() {
+    this.initializeFromQueryParams();
+  }
 
-    const getQueryParams = this.queryService.getQueryParams();
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
 
-    if (getQueryParams['search']) {
-      await this.searchCharacter(getQueryParams['search']);
-      this.searchTerm = getQueryParams['search'];
-    }
+  private initializeFromQueryParams() {
+    const queryParam = this.queryService.getQueryParam();
 
-    if (+getQueryParams['page'] && +getQueryParams['page'] <= this.info.pages) {
-      await this.goToPage(+getQueryParams['page']);
+    // If there is a search term in the URL
+    if (queryParam[this.defaultParams[0]]) {
+      this.searchTerm = queryParam[this.defaultParams[0]];
+      this.searchCharacter(this.searchTerm);
+    } else if (
+      +queryParam[this.defaultParams[1]] &&
+      +queryParam[this.defaultParams[1]] > 1
+    ) {
+      // If there is a page parameter in the URL
+      this.goToPage(+queryParam[this.defaultParams[1]]);
+    } else {
+      // Default case: load the first page
+      this.fetchCharacters();
     }
   }
 
-  async fetchCharacters() {
-    this.isLoading = true;
-    try {
-      const data = await this.rickAndMortyService.getCharacters().toPromise();
-      this.updateCharacterData(data);
-    } catch (error) {
-      this.handleError(error);
-    } finally {
-      this.isLoading = false;
-    }
+  fetchCharacters() {
+    const data$ = this.rickAndMortyService
+      .getCharacters()
+      .pipe(
+        shareReplay(1),
+        catchError((error) => {
+          console.log('Error fetching characters:', error);
+          return of({
+            info: { count: 0, pages: 0, next: '', prev: '' },
+            results: [],
+          } as ApiResponse<Character>);
+        })
+      )
+      .subscribe((data) => {
+        this.updateCharacterData(data);
+      });
+
+    this.subscriptions.add(data$);
   }
 
-  async goToPage(page: number) {
-    this.isLoading = true;
-    try {
-      const data = this.searchTerm
-        ? await this.rickAndMortyService
-            .getCharacterByName(this.searchTerm, page)
-            .toPromise()
-        : await this.rickAndMortyService.getCharactersByPage(page).toPromise();
-      this.updateCharacterData(data);
-    } catch (error) {
-      this.handleError(error);
-    } finally {
-      this.isLoading = false;
+  goToPage(numberPage: number) {
+    if (numberPage === 1) {
+      this.queryService.removeQueryParams([this.defaultParams[1]]);
     }
-    this.pageCurrent = page;
-    this.setUrlPage(page);
-  }
-
-  async setUrlPage(page: number) {
-    const queryParams: any = { page };
-    if (this.searchTerm) {
-      queryParams.search = this.searchTerm;
-    }
-    await this.queryService.addQueryParams(queryParams);
-
-    if (page === 1) {
-      await this.queryService.clearQueryParams(['page']);
-    }
+    this.queryService
+      .updateQueryParam({ [this.defaultParams[1]]: numberPage })
+      .then(() => {
+        this.pageCurrent.set(numberPage);
+        this.fetchCharacters();
+      })
+      .catch((error) => {
+        console.error('Error navigating to page:', error);
+      });
   }
 
   onImageLoad(item: any): void {
     item.loading = false;
   }
 
-  async searchCharacter(name: string) {
-    this.isLoading = true;
-    this.searchTerm = name;
-    try {
-      const data = await this.rickAndMortyService
-        .getCharacterByName(name)
-        .toPromise();
-      this.updateCharacterData(data);
-    } catch (error) {
-      this.handleError(error);
-    } finally {
-      this.isLoading = false;
-      this.pageCurrent = 1;
-      await this.setUrlPage(1);
+  searchCharacter(query: string) {
+    this.searchTerm = query;
+
+    // If the search term is empty, remove the query parameters
+    if (!query.trim()) {
+      this.queryService
+        .removeQueryParams(this.defaultParams)
+        .then(() => {
+          this.searchTerm = '';
+          this.pageCurrent.set(1);
+          this.fetchCharacters();
+        })
+        .catch((error) => {
+          console.error('Error al eliminar parámetros:', error);
+        });
+      return;
+    } else {
+      this.pageCurrent.set(1); // Reset the current page to 1
+      this.queryService
+        .updateQueryParam({ page: 1, name: query })
+        .then(() => {
+          this.fetchCharacters();
+        })
+        .catch((error) => {
+          console.error('Error searching character:', error);
+        });
     }
   }
 
-  private updateCharacterData(data: any) {
-    this.characters = setCharactersWithLoading(data.results);
+  private updateCharacterData(data: ApiResponse<Character>) {
     this.info = data.info;
+    this.characters$ = of({
+      info: this.info,
+      results: setCharactersWithLoading(data.results),
+    });
     this.listPages = Array.from({ length: this.info.pages }, (_, i) => i + 1);
     this.errorSearch = false;
-  }
-
-  private handleError(error: any) {
-    this.errorSearch = true;
-    return error;
-    // console.error('Error fetching characters:', error);
   }
 }

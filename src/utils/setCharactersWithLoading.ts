@@ -1,12 +1,11 @@
+import { Character } from '@typesApp/interfacesRM';
+
 /**
  * Set loading character to true
  *
- * @param {any[]} characters
- * @returns {void}
+ * @param {Character[]} characters - Array of characters
+ * @returns {Character[]} - Array of characters with loading set to true
  */
-
-import { Character } from '@typesApp/characterType';
-
 export function setCharactersWithLoading(characters: Character[]): Character[] {
   return characters.map((character: Character) => ({
     ...character,

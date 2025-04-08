@@ -1,25 +1,25 @@
-<div class="characters-container" *ngIf="characters">
+<div class="characters-container">
     <nav class="characters-header-container">
         <div class="characters-header-top">
             <h1 class="characters-title">Character List</h1>
             <span class="search-character-container">
-                <app-search-bar labelInput="Search Characters" placeholder="E.g Rick" [hasError]="errorSearch"
-                    [errorMessage]="'No results for: '+searchTerm" [query]="searchTerm"
-                    (searchChange)="searchCharacter($event)" />
+                <app-search-bar param="name" labelInput="Search Characters" placeholder="E.g Rick"
+                    [hasError]="rickAndMortyService.hasError()" [errorMessage]="'No results for: '+ searchTerm"
+                    [query]="searchTerm" (searchChange)="searchCharacter($event)" />
             </span>
         </div>
 
-        <p class="characters-count">You found: {{ info.count }} characters</p>
+        <p class="characters-count">You found: {{ info.count || 0 }} characters</p>
     </nav>
-    <ul class="characters-list">
-        <li *ngFor="let character of characters" class="character-item">
+    <ul class="characters-list" *ngIf="characters$ | async as characters">
+        <li *ngFor="let character of characters.results" class="character-item">
             <app-character-item [status]="character.status" [isLoading]="character.loading" [image]="character.image"
                 [id]="character.id" [name]="character.name" [species]="character.species" [character]="character"
                 (onImageLoad)="onImageLoad($event)" />
         </li>
     </ul>
     <span class="pagination-characters">
-        <app-pagination [info]="info" [pageCurrent]="pageCurrent" [listPages]="listPages" [isLoading]="isLoading"
-            (pageChange)="goToPage($event)" />
+        <app-pagination [info]="info" [pageCurrent]="pageCurrent()" [listPages]="listPages"
+            [isLoading]="rickAndMortyService.isLoading()" (pageChange)="goToPage($event)" />
     </span>
 </div>
